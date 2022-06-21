@@ -20,7 +20,7 @@
                     <p>Total:
                         <span> {{ cartItem.product.price * cardItem.quantity }}</span>
                     </p>
-                    <br><a href="#" @click="deleteItem(cartItem.id)">Remove From Cart</a></br>
+                    <br><a href="#" @click="deleteItem(cartItem.id)">Remove From Cart</a>
                 </div>
             </div>
         </div>

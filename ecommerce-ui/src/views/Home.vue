@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import Filters from './components/Filters.vue'
-import ProductCard from './components/ProductCard.vue'
+import Filters from '../components/Filters.vue'
+import ProductCard from '../components/ProductCard.vue'
 
 export default {
     name: 'Home',
@@ -33,7 +33,18 @@ export default {
         }
     },
     mounted() {
-        this.productSize = Math.min(6, this.products.length );
+        //this.productSize = Math.min(6, this.products.length );
     }
 }
 </script>
+
+<style>
+#home .container {
+    width: 1200px;
+    margin: auto;
+}
+
+#home h1 {
+    font-family: 'Poppins', sans-serif;
+}
+</style>
