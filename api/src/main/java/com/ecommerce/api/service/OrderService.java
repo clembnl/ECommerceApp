@@ -1,5 +1,8 @@
 package com.ecommerce.api.service;
 
+import com.ecommerce.api.dto.cart.CartDto;
+import com.ecommerce.api.dto.cart.CartItemDto;
+import com.ecommerce.api.dto.checkout.CheckoutItemDto;
 import com.ecommerce.api.exception.OrderNotFoundException;
 import com.ecommerce.api.model.Order;
 import com.ecommerce.api.model.OrderItem;

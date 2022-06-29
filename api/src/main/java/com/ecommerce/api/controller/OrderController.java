@@ -1,5 +1,7 @@
 package com.ecommerce.api.controller;
 
+import com.ecommerce.api.dto.checkout.CheckoutItemDto;
+import com.ecommerce.api.dto.checkout.StripeResponse;
 import com.ecommerce.api.exception.AuthenticationFailException;
 import com.ecommerce.api.exception.OrderNotFoundException;
 import com.ecommerce.api.model.Order;
@@ -8,7 +10,6 @@ import com.ecommerce.api.service.AuthenticationService;
 import com.ecommerce.api.service.OrderService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
-import com.stripe.net.StripeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
