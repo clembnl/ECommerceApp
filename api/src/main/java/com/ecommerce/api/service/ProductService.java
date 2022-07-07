@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.ecommerce.api.dto.product.ProductDto;
 import com.ecommerce.api.exception.ProductNotExistException;
+import com.ecommerce.api.model.Category;
 import com.ecommerce.api.model.Product;
 import com.ecommerce.api.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,18 +33,18 @@ public class ProductService {
         return productDto;
     }
 
-    public static Product getProductFromDto(ProductDto productDto) {
-        Product product = new Product(productDto);
+    public static Product getProductFromDto(ProductDto productDto, Category category) {
+        Product product = new Product(productDto, category);
         return product;
     }
 
-    public void addProduct(ProductDto productDto) {
-        Product product = getProductFromDto(productDto);
+    public void addProduct(ProductDto productDto, Category category) {
+        Product product = getProductFromDto(productDto, category);
         productRepository.save(product);
     }
 
-    public void updateProduct(Integer productID, ProductDto productDto) {
-        Product product = getProductFromDto(productDto);
+    public void updateProduct(Integer productID, ProductDto productDto, Category category) {
+        Product product = getProductFromDto(productDto, category);
         product.setId(productID);
         productRepository.save(product);
     }

@@ -31,9 +31,9 @@ services:
     restart: unless-stopped
 
   api:
-    image: clementbonal/ecommerce-api:1.0
-#    build:
-#      context: .
+    image: clementbonal/ecommerce-api:1.1
+    build:
+      context: .
     container_name: api
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
