@@ -35,7 +35,7 @@ public class ProductController {
             return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category is invalid"), HttpStatus.CONFLICT);
         }
         Category category = optionalCategory.get();
-        productService.addProduct(productDto);
+        productService.addProduct(productDto, category);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Product has been added"), HttpStatus.CREATED);
     }
 
@@ -46,7 +46,7 @@ public class ProductController {
             return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category is invalid"), HttpStatus.CONFLICT);
         }
         Category category = optionalCategory.get();
-        productService.updateProduct(productID, productDto);
+        productService.updateProduct(productID, productDto, category);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Product has been updated"), HttpStatus.OK);
     }
 }
