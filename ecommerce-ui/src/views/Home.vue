@@ -1,11 +1,12 @@
 <template>
     <div id="home">
-        <Filters />
+        <Filters v-if="showFilters" @closeFilters="filterClick"/>
 
         <!-- display products -->
         <div class="container">
             <div class="row">
                 <h1>New Arrivals</h1>
+                <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
             </div>
             <div class="row">
                 <div v-for="index in this.productSize" :key="index">
@@ -30,6 +31,12 @@ export default {
     data() {
         return {
             productSize: 0,
+            showFilters: false,
+        }
+    },
+    methods: {
+        filterClick() {
+            this.showFilters = !this.showFilters;
         }
     },
     mounted() {
@@ -44,7 +51,24 @@ export default {
     margin: auto;
 }
 
+#home .row {
+    display: flex;
+    justify-content: space-between;
+}
+
 #home h1 {
     font-family: 'Poppins', sans-serif;
+}
+
+.btn {
+    box-shadow: O O 2em black;
+    background-color: white;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+}
+
+.transparent {
+    opacity: 0.5;
 }
 </style>
