@@ -37,10 +37,11 @@ export default {
     methods: {
         filterClick() {
             this.showFilters = !this.showFilters;
-        }
+        },
     },
     mounted() {
-        //this.productSize = Math.min(6, this.products.length );
+        this.productSize = Math.min(6, this.products.length );
+        console.log("products length:", this.productSize);
     }
 }
 </script>
