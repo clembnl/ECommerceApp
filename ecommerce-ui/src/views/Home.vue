@@ -20,6 +20,7 @@
 <script>
 import Filters from '../components/Filters.vue'
 import ProductCard from '../components/ProductCard.vue'
+import axios from 'axios'
 
 export default {
     name: 'Home',
@@ -27,9 +28,9 @@ export default {
         Filters,
         ProductCard,
     },
-    props: ['products'],
     data() {
         return {
+            products: [],
             productSize: 0,
             showFilters: false,
         }
@@ -38,10 +39,18 @@ export default {
         filterClick() {
             this.showFilters = !this.showFilters;
         },
+        async fetchData() {
+            await axios
+                .get('api/product/')
+                .then(response => {
+                    this.products = response.data;
+                })
+                .catch((err) => console.log("err", err));
+            },
     },
-    mounted() {
+    async mounted() {
+        await this.fetchData();
         this.productSize = Math.min(6, this.products.length );
-        console.log("products length:", this.productSize);
     }
 }
 </script>

@@ -8,7 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   //admin home page
   {
@@ -16,18 +16,18 @@ const routes = [
     name: "Admin",
     component: Admin,
   },
-    //cart page
-    {
-      path: "/cart",
-      name: "Cart",
-      component: Cart
-    },
-    //checkout page
-    {
-      path: "/checkout",
-      name: "Checkout",
-      component: Checkout
-    },
+  //cart page
+  {
+    path: "/cart",
+    name: "Cart",
+    component: Cart
+  },
+  //checkout page
+  {
+    path: "/checkout",
+    name: "Checkout",
+    component: Checkout
+  },
 ]
 
 const router = createRouter({
