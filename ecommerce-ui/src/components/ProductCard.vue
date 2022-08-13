@@ -1,5 +1,5 @@
 <template>
-    <div class="card" v-show="product.categoryId === 16">
+    <div class="card">
         <div class="card-img">
             <img 
                 class="card-img-top"
@@ -11,11 +11,13 @@
         </div>
 
         <div class="card-body">
-            <!--
             <router-link :to=" { name: 'ShowDetails', params: { id: product.id } }">
-                <h5 class="card-title">{{ product.name }}</h5>
+                <div class="card-title">
+                    <h5 class="card-name">{{ product.name }}</h5>
+                    <h5 class="card-price">{{ product.price }}€</h5>
+                </div>
             </router-link>
-            <p class="card-text">{{ product.description.substring(0,65) }}...</p>
+            <!--
             <router-link id="edit-product" :to="{ name: 'EditProduct', params: { id: product.id, product: product } }" v-show="$route.name == 'AdminProduct'">
                 <button class="btn">Edit</button>
             </router-link>
@@ -30,3 +32,35 @@ export default {
     props: ['product'],
 }
 </script>
+
+<style scoped>
+
+.card {
+    margin: 10px;
+}
+
+.card-body a {
+    text-decoration: none;
+}
+
+.card-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-name {
+    font-family: 'Montserrat', sans-serif;
+    color: black;
+    font-weight: normal;
+    font-size: 1em;
+}
+
+.card-price {
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    color: burlywood;
+    font-size: 1em;
+}
+
+</style>

@@ -9,9 +9,7 @@
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
             </div>
             <div class="row">
-                <div v-for="index in this.productSize" :key="index">
-                    <ProductCard :product="products[index-1]" />
-                </div>
+                <ProductCard v-for="item in this.newArrivals" :product="item" :key="item.id" />
             </div>
         </div>
     </div>
@@ -31,7 +29,7 @@ export default {
     data() {
         return {
             products: [],
-            productSize: 0,
+            newArrivals: [],
             showFilters: false,
         }
     },
@@ -50,8 +48,8 @@ export default {
     },
     async mounted() {
         await this.fetchData();
-        this.productSize = Math.min(6, this.products.length );
-    }
+        this.newArrivals = this.products.filter(product => product.categoryId === 16);
+    },
 }
 </script>
 
