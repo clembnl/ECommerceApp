@@ -6,9 +6,9 @@
 
         <div id="navbar-menu">
             <ul>
-                <li>New Collection</li>
-                <li>Men</li>
-                <li>Women</li>
+                <li><button @click="toggleNew">New Arrivals</button></li>
+                <li><button @click="toggleMen">Men</button></li>
+                <li><button @click="toggleWomen">Women</button></li>
             </ul>
         </div>
 
@@ -18,7 +18,23 @@
     </nav>
 </template>
 
-<style>
+<script>
+export default {
+    methods: {
+        toggleNew() {
+            this.$emit('toggleNew');
+        },
+        toggleMen() {
+            this.$emit('toggleMen');
+        },
+        toggleWomen() {
+            this.$emit('toggleWomen');
+        }
+    }
+}
+</script>
+
+<style scoped>
 nav {
     font-family: 'Montserrat', sans-serif;
     display: flex;
@@ -39,4 +55,11 @@ nav {
 #cart {
     padding-top: 15px;
 }
+
+button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+}
+
 </style>
