@@ -4,7 +4,6 @@
             @toggleNew="toggleNew" />
 
     <div id="home">
-
         <div class="container" v-if="showNew">
             <div class="row-title">
                 <h1>New Arrivals</h1>
@@ -17,7 +16,7 @@
         </div>
 
         <div class="container" v-if="showMen">
-            <div class="row">
+            <div class="row-title">
                 <h1>Men</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
             </div>
@@ -27,7 +26,7 @@
         </div>
 
         <div class="container" v-if="showWomen">
-            <div class="row">
+            <div class="row-title">
                 <h1>Women</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
             </div>
@@ -54,6 +53,7 @@ export default {
     data() {
         return {
             products: [],
+            categories: [],
             newArrivals: [],
             men: [],
             women: [],
@@ -89,13 +89,20 @@ export default {
                     this.products = response.data;
                 })
                 .catch((err) => console.log("err", err));
-            },
+            await axios
+                .get('api/category/')
+                .then(response => {
+                    this.categories = response.data;
+                })
+                .catch((err) => console.log("err", err));
+        },
     },
-    async mounted() {
-        await this.fetchData();
-        this.newArrivals = this.products.filter(product => product.categoryId === 16);
-        this.men = this.products.filter(product => product.categoryId === 17);
-        this.women = this.products.filter(product => product.categoryId === 18);
+    mounted() {
+        this.fetchData().then(() => {
+            this.newArrivals = this.products.filter(product => product.categoryId === 16);
+            this.men = this.products.filter(product => product.categoryId === 17);
+            this.women = this.products.filter(product => product.categoryId === 18);
+        })
     },
 }
 </script>

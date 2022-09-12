@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.ecommerce.api.dto.product.ProductDto;
 import com.ecommerce.api.model.Category;
+import com.ecommerce.api.model.Product;
 import com.ecommerce.api.service.CategoryService;
 import com.ecommerce.api.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,12 @@ public class ProductController {
     public ResponseEntity<List<ProductDto>> getProducts() {
         List<ProductDto> body = productService.listProducts();
         return new ResponseEntity<List<ProductDto>>(body, HttpStatus.OK);
+    }
+
+    @GetMapping("/{productID}")
+    public ResponseEntity<Product> getProduct(@PathVariable("productID") Integer productID) {
+        Product body = productService.getProductById(productID);
+        return new ResponseEntity<Product>(body, HttpStatus.OK);
     }
 
     @PostMapping("/add")

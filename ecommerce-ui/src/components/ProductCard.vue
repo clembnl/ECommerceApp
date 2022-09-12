@@ -11,7 +11,7 @@
         </div>
 
         <div class="card-body">
-            <router-link :to=" { name: 'ShowDetails', params: { id: product.id } }">
+            <router-link :to=" { name: 'ShowDetails', params: { id: product.id } }" >
                 <div class="card-title">
                     <h5 class="card-name">{{ product.name }}</h5>
                     <h5 class="card-price">{{ product.price }}€</h5>

@@ -1,7 +1,6 @@
 <template>
     <div class="filters">
         <ul>
-            <li><button @click="closeFilters()" class="btn-filter">Close filter</button></li>
             <li><select name="categories" class="select">
                     <option value="">Categories</option>
                     <option value="new arrival">New Arrival</option>
@@ -24,6 +23,7 @@
                     <option value="brand">Brand</option>
                 </select>
             </li>
+            <li><button @click="closeFilters()" class="btn-filter">Close filter</button></li>
         </ul>
     </div>
 </template>
