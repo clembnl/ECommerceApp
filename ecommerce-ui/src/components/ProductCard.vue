@@ -61,6 +61,7 @@ export default {
     font-weight: bold;
     color: burlywood;
     font-size: 1em;
+    margin-left: 5px;
 }
 
 </style>

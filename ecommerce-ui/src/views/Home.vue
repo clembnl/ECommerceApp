@@ -116,6 +116,7 @@ export default {
 #home .row-title {
     display: flex;
     justify-content: space-between;
+    margin-left: 8px;
 }
 
 #home .row {

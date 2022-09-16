@@ -67,6 +67,27 @@ export default {
     };
   },
   methods: {
+    toggleNew() {
+      this.$router.push({name: "Home", params: {
+        showNew: true,
+        showMen: false,
+        showWomen: false
+      }})
+    },
+    toggleMen() {
+      this.$router.push({name: "Home", params: {
+        showNew: false,
+        showMen: true,
+        showWomen: false
+      }})
+    },
+    toggleWomen() {
+      this.$router.push({name: "Home", params: {
+        showNew: false,
+        showMen: false,
+        showWomen: true
+      }})
+    },
     addToWishlist() {
       if (!this.token) {
         // user is not logged in

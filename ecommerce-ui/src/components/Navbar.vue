@@ -12,9 +12,15 @@
             </ul>
         </div>
 
-        <router-link class="navbar-cart" :to="{ name: 'Cart' }">
-            <img id="cart" src="../assets/shopping_bag_logo.svg" />
-        </router-link>
+        <div>
+            <router-link class="navbar-account" :to="{ name: 'Home' }">
+                <img id="account" src="../assets/account_logo.svg" />
+            </router-link>
+
+            <router-link class="navbar-cart" :to="{ name: 'Cart' }">
+                <img id="cart" src="../assets/shopping_bag_logo.svg" />
+            </router-link>
+        </div>
     </nav>
 </template>
 
@@ -54,6 +60,8 @@ nav {
 
 #cart {
     padding-top: 15px;
+    margin-left: 30px;
+    margin-right: 15px;
 }
 
 button {
