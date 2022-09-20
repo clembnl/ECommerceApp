@@ -1,8 +1,10 @@
 <template>
     <nav>
-        <router-link class="navbar-brand" :to="{ name: 'Home' }">
-            <img id="logo" src="" />
-        </router-link>
+        <div id="navbar-logo">
+            <router-link class="navbar-brand" :to="{ name: 'Home' }">
+                <img id="logo" src="../assets/logo_sneakers.png" width="200" />
+            </router-link>
+        </div>
 
         <div id="navbar-menu">
             <ul>
@@ -12,7 +14,7 @@
             </ul>
         </div>
 
-        <div>
+        <div id="navbar-icon">
             <router-link class="navbar-account" :to="{ name: 'Home' }">
                 <img id="account" src="../assets/account_logo.svg" />
             </router-link>
@@ -49,19 +51,44 @@ nav {
     opacity: 0.5;
 }
 
+/*
+#navbar-logo {
+    flex-grow: 1;
+}
+
+#navbar-menu {
+    flex-grow: 1;
+}
+
+#navbar-icon {
+    flex-grow: 1;
+}
+*/
+
 #navbar-menu ul {
     display: flex;
     list-style: none;
+    padding-inline-start: 0;
 }
 
 #navbar-menu ul li{
     padding: 20px;
 }
 
-#cart {
-    padding-top: 15px;
+#logo {
+    padding-top: 20px;
+}
+
+#account {
+    padding-top: 20px;
     margin-left: 30px;
     margin-right: 15px;
+}
+
+#cart {
+    padding-top: 20px;
+    margin-left: 15px;
+    margin-right: 20px;
 }
 
 button {
