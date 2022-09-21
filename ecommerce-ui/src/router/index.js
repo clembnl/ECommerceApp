@@ -4,6 +4,7 @@ import Admin from '../views/Admin.vue'
 import Cart from '../views/Cart.vue'
 import Checkout from '../views/Checkout.vue'
 import ShowDetails from "../views/Product/ShowDetails"
+import User from '../views/User'
 
 const routes = [
   {
@@ -36,6 +37,12 @@ const routes = [
     component: ShowDetails,
     props: true
   },
+  //user page
+  {
+    path: "/user",
+    name: "User",
+    component: User
+  }
 ]
 
 const router = createRouter({

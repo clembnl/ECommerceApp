@@ -15,7 +15,7 @@
         </div>
 
         <div id="navbar-icon">
-            <router-link class="navbar-account" :to="{ name: 'Home' }">
+            <router-link class="navbar-account" :to="{ name: 'User' }">
                 <img id="account" src="../assets/account_logo.svg" />
             </router-link>
 
@@ -50,20 +50,6 @@ nav {
     margin: 20px;
     opacity: 0.5;
 }
-
-/*
-#navbar-logo {
-    flex-grow: 1;
-}
-
-#navbar-menu {
-    flex-grow: 1;
-}
-
-#navbar-icon {
-    flex-grow: 1;
-}
-*/
 
 #navbar-menu ul {
     display: flex;

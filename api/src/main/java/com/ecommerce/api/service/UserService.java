@@ -72,17 +72,17 @@ public class UserService {
         }
     }
 
-    public SignInResponseDto signIn(SignInDto signInDto) throws CustomException {
+    public SignInResponseDto signIn(SignInDto signinDto) throws CustomException {
         // first find User by email
-        User user = userRepository.findByEmail(signInDto.getEmail());
+        User user = userRepository.findByEmail(signinDto.getEmail());
         if(!Helper.notNull(user)){
             throw  new AuthenticationFailException("user not present");
         }
         try {
             // check if password is right
-            if (!user.getPassword().equals(hashPassword(signInDto.getPassword()))){
-                // passowrd doesnot match
-                throw  new AuthenticationFailException(MessageStrings.WRONG_PASSWORD);
+            if (!user.getPassword().equals(hashPassword(signinDto.getPassword()))){
+                // password does not match
+                throw new AuthenticationFailException(MessageStrings.WRONG_PASSWORD);
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
@@ -106,6 +106,7 @@ public class UserService {
         byte[] digest = md.digest();
         String myHash = DatatypeConverter
                 .printHexBinary(digest).toUpperCase();
+        System.out.println(myHash);
         return myHash;
     }
 
