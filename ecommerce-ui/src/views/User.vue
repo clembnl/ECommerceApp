@@ -6,13 +6,8 @@
     <div id="user">
         <SignIn v-if="!token && displaySignIn" @toggleSignUp="toggleSignUp"></SignIn>
         <SignUp v-if="!token && displaySignUp" @toggleSignIn="toggleSignIn"></SignUp>
-        <div class="signedIn" v-if="token">
-            <h2>Already signed in !</h2>
-            <router-link :to="{ name: 'Home' }">
-                <button class="btn">Home</button>
-            </router-link>
-            <button class="no-btn" @click="signout">Sign Out</button>
-        </div>
+        <WishList v-if="token"></WishList>
+        <button class="no-btn" @click="signout">Sign Out</button>
     </div>
 </template>
 
@@ -20,13 +15,15 @@
 import Navbar from '../components/Navbar'
 import SignIn from '../components/SignIn'
 import SignUp from '../components/SignUp'
+import WishList from '../components/WishList'
 
 export default {
     name: 'User',
     components: {
         Navbar,
         SignIn,
-        SignUp
+        SignUp,
+        WishList
     },
     data() {
         return {
@@ -78,7 +75,7 @@ export default {
 
 <style scoped>
     #user{
-        width: 33%;
+        width: 30%;
         margin: auto;
         padding: 1%;
         /*border: solid darkgray 2px;*/
@@ -108,7 +105,7 @@ export default {
         width: 100%;
     }
 
-    #user .no-btn {
+    .no-btn {
         margin-top: 10px;
         margin-bottom: 10px;
         color: black;

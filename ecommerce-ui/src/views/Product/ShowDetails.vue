@@ -155,8 +155,8 @@ export default {
     this.category = this.categories.find(
       (category) => category.id == this.product.categoryId
     );
-    this.token = localStorage.getItem("token");
     */
+    this.token = localStorage.getItem("token");
   },
 }
 </script>
