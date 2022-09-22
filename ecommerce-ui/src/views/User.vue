@@ -7,7 +7,7 @@
         <SignIn v-if="!token && displaySignIn" @toggleSignUp="toggleSignUp"></SignIn>
         <SignUp v-if="!token && displaySignUp" @toggleSignIn="toggleSignIn"></SignUp>
         <WishList v-if="token"></WishList>
-        <button class="no-btn" @click="signout">Sign Out</button>
+        <button class="no-btn" @click="signout" v-if="token">Sign Out</button>
     </div>
 </template>
 
