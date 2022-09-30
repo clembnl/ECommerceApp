@@ -3,10 +3,7 @@ package com.ecommerce.api.service;
 import com.ecommerce.api.config.MessageStrings;
 import com.ecommerce.api.config.ResponseStatus;
 import com.ecommerce.api.dto.ResponseDto;
-import com.ecommerce.api.dto.user.SignInDto;
-import com.ecommerce.api.dto.user.SignInResponseDto;
-import com.ecommerce.api.dto.user.SignUpDto;
-import com.ecommerce.api.dto.user.UserCreateDto;
+import com.ecommerce.api.dto.user.*;
 import com.ecommerce.api.exception.AuthenticationFailException;
 import com.ecommerce.api.exception.CustomException;
 import com.ecommerce.api.model.AuthenticationToken;
@@ -37,7 +34,7 @@ public class UserService {
 
     Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    public ResponseDto signUp(SignUpDto signupDto)  throws CustomException {
+    public SignUpResponseDto signUp(SignUpDto signupDto)  throws CustomException {
         // Check to see if the current email address has already been registered.
         if (Helper.notNull(userRepository.findByEmail(signupDto.getEmail()))) {
             // If the email address has been registered then throw an exception.
@@ -65,7 +62,8 @@ public class UserService {
             // save token in database
             authenticationService.saveConfirmationToken(authenticationToken);
             // success in creating
-            return new ResponseDto(ResponseStatus.success.toString(), MessageStrings.USER_CREATED);
+            return new SignUpResponseDto(ResponseStatus.success.toString(), MessageStrings.USER_CREATED,
+                    authenticationToken.getToken());
         } catch (Exception e) {
             // handle signup error
             throw new CustomException(e.getMessage());

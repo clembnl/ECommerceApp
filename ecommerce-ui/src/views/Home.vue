@@ -4,34 +4,47 @@
             @toggleNew="toggleNew" />
 
     <div id="home">
-        <div class="container" v-if="showNew">
+        <div class="container" v-if="showNew && !showFiltered">
             <div class="row-title">
                 <h1>New Arrivals</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
             </div>
-            <Filters v-if="showFilters" @closeFilters="filterClick"/>
+            <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
             <div class="row">
                 <ProductCard v-for="item in this.newArrivals" :product="item" :key="item.id" />
             </div>
         </div>
 
-        <div class="container" v-if="showMen">
+        <div class="container" v-if="showMen && !showFiltered">
             <div class="row-title">
                 <h1>Men</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
             </div>
+            <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
             <div class="row">
                 <ProductCard v-for="item in this.men" :product="item" :key="item.id" />
             </div>
         </div>
 
-        <div class="container" v-if="showWomen">
+        <div class="container" v-if="showWomen && !showFiltered">
             <div class="row-title">
+                <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
                 <h1>Women</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
             </div>
             <div class="row">
                 <ProductCard v-for="item in this.women" :product="item" :key="item.id" />
+            </div>
+        </div>
+
+        <div class="container" v-if="showFiltered">
+            <div class="row-title">
+                <h1>Search</h1>
+                <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
+                <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
+            </div>
+            <div class="row">
+                <ProductCard v-for="item in this.filtered" :product="item" :key="item.id" />
             </div>
         </div>
     </div>
@@ -57,10 +70,12 @@ export default {
             newArrivals: [],
             men: [],
             women: [],
+            filtered: [],
             showFilters: false,
             showNew: true,
             showMen: false,
             showWomen: false,
+            showFiltered: false
         }
     },
     methods: {
@@ -68,16 +83,19 @@ export default {
             this.showNew = true;
             this.showMen = false;
             this.showWomen = false;
+            this.showFiltered = false;
         },
         toggleMen() {
             this.showNew = false;
             this.showMen = true;
             this.showWomen = false;
+            this.showFiltered = false;
         },
         toggleWomen() {
             this.showNew = false;
             this.showMen = false;
             this.showWomen = true;
+            this.showFiltered = false;
         },
         filterClick() {
             this.showFilters = !this.showFilters;
@@ -96,6 +114,44 @@ export default {
                 })
                 .catch((err) => console.log("err", err));
         },
+        applyFilter(filters) {
+            this.filtered = this.products;
+            if (filters.category !== '') {
+                console.log(filters.category);
+                const cat = this.categories.find(category => category.categoryName === filters.category);
+                this.filtered = this.filtered.filter(product => product.categoryId === cat.id);
+            }
+            if (filters.brand !== '') {
+                this.filtered = this.filtered.filter(product => product.brand === filters.brand);
+            }
+            if (filters.sort !== '') {
+                if (filters.sort === 'price') {
+                    this.filtered = this.filtered.sort((a, b) => {
+                        let comparison = 0;
+                        if (a.price > b.price) {
+                            comparison = 1;
+                        }
+                        else if (a.price < b.price) {
+                            comparison = -1;
+                        }
+                        return comparison;
+                    })
+                }
+                if (filters.sort === 'brand') {
+                    this.filtered = this.filtered.sort((a, b) => {
+                        let comparison = 0;
+                        if (a.brand > b.brand) {
+                            comparison = 1;
+                        }
+                        else if (a.brand < b.brand) {
+                            comparison = -1;
+                        }
+                        return comparison;
+                    })
+                }
+            }
+            this.showFiltered = true;
+        }
     },
     mounted() {
         this.fetchData().then(() => {

@@ -79,10 +79,11 @@ export default {
                 console.log("user", user);
                 await axios
                 .post('api/user/signup', user)
-                .then(() => {
+                .then((res) => {
                     this.$router.replace("/");
+                    localStorage.setItem("token", res.data.token);
                     swal({
-                    text: "User signup successful, please login",
+                    text: "User signup successful",
                     icon: "success",
                     });
                 })

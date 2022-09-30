@@ -4,6 +4,7 @@ import com.ecommerce.api.dto.ResponseDto;
 import com.ecommerce.api.dto.user.SignInDto;
 import com.ecommerce.api.dto.user.SignInResponseDto;
 import com.ecommerce.api.dto.user.SignUpDto;
+import com.ecommerce.api.dto.user.SignUpResponseDto;
 import com.ecommerce.api.exception.AuthenticationFailException;
 import com.ecommerce.api.exception.CustomException;
 import com.ecommerce.api.model.User;
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseDto Signup(@RequestBody SignUpDto signupDto) throws CustomException {
+    public SignUpResponseDto Signup(@RequestBody SignUpDto signupDto) throws CustomException {
         return userService.signUp(signupDto);
     }
 
