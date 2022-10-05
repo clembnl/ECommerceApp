@@ -4,8 +4,8 @@
             <img 
                 class="card-img-top"
                 :src="product.imageURL"
-                width="300"
-                height="300"
+                width="350"
+                height="350"
                 alt="card image cap"
             />
         </div>
@@ -37,6 +37,7 @@ export default {
 
 .card {
     margin: 10px;
+    width: 350px;
 }
 
 .card-body a {

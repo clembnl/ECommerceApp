@@ -6,7 +6,7 @@
     <div id="home">
         <div class="container" v-if="showNew && !showFiltered">
             <div class="row-title">
-                <h1>New Arrivals</h1>
+                <h1 class="title">New Arrivals</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
             </div>
             <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
@@ -17,7 +17,7 @@
 
         <div class="container" v-if="showMen && !showFiltered">
             <div class="row-title">
-                <h1>Men</h1>
+                <h1 class="title">Men</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
             </div>
             <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
@@ -28,10 +28,10 @@
 
         <div class="container" v-if="showWomen && !showFiltered">
             <div class="row-title">
-                <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
-                <h1>Women</h1>
+                <h1 class="title">Women</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
             </div>
+            <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
             <div class="row">
                 <ProductCard v-for="item in this.women" :product="item" :key="item.id" />
             </div>
@@ -39,10 +39,10 @@
 
         <div class="container" v-if="showFiltered">
             <div class="row-title">
-                <h1>Search</h1>
-                <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
+                <h1 class="title">Search</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
             </div>
+            <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
             <div class="row">
                 <ProductCard v-for="item in this.filtered" :product="item" :key="item.id" />
             </div>
@@ -117,9 +117,11 @@ export default {
         applyFilter(filters) {
             this.filtered = this.products;
             if (filters.category !== '') {
-                console.log(filters.category);
                 const cat = this.categories.find(category => category.categoryName === filters.category);
                 this.filtered = this.filtered.filter(product => product.categoryId === cat.id);
+            }
+            if (filters.range.length === 2) {
+                this.filtered = this.filtered.filter(product => (product.price >= filters.range[0] && product.price <= filters.range[1]));
             }
             if (filters.brand !== '') {
                 this.filtered = this.filtered.filter(product => product.brand === filters.brand);
@@ -165,7 +167,7 @@ export default {
 
 <style>
 #home .container {
-    width: 1200px;
+    width: 80%;
     margin: auto;
 }
 
@@ -173,10 +175,17 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-left: 8px;
+    margin-right: 6px;
+}
+
+#home .row-title .title {
+    order: 0;
 }
 
 #home .row {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 #home h1 {
