@@ -21,7 +21,7 @@
                         <p>Quantity: {{ cartItem.quantity }}</p>
                     </div>
                     <p>Total:
-                        <span> {{ cartItem.product.price * cartItem.quantity }}€</span>
+                        <span>${{ cartItem.product.price * cartItem.quantity }}</span>
                     </p>
                     <a href="#" @click="deleteItem(cartItem.id)">Remove From Cart</a>
                 </div>
@@ -30,7 +30,7 @@
 
         <!-- Display total price -->
         <div class="cart-total-price">
-            <h3>Total : {{ totalCost }}€</h3>
+            <h3>Total : ${{ totalCost }}</h3>
             <button :disabled="isDisabled()" type="button" class="btn" @click="checkout">Confirm Order</button>
         </div>
     </div>

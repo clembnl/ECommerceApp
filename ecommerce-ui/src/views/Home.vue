@@ -78,7 +78,6 @@ export default {
     },
     methods: {
         toggle(showNew, showMen, showWomen, showFiltered) {
-            console.log(showNew, showMen, showWomen, showFiltered);
             this.showNew = showNew;
             this.showMen = showMen;
             this.showWomen = showWomen;

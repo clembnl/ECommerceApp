@@ -86,6 +86,7 @@ public class OrderService {
         // build the session param
         SessionCreateParams params = SessionCreateParams.builder()
                 .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
+                //.setCurrency("eur")
                 .setMode(SessionCreateParams.Mode.PAYMENT)
                 .setCancelUrl(failedURL)
                 .addAllLineItem(sessionItemsList)

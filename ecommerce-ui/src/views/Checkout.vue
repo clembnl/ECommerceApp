@@ -78,7 +78,8 @@ export default {
                     return response.data;
                 })
                 .then((session) => {
-                    return this.stripe.redirecttoCheckout({ sessionId: session.sessionId })
+                    console.log(session);
+                    return this.stripe.redirectToCheckout({ sessionId: session.sessionId })
                 });
         },
     },
