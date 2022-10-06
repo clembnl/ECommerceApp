@@ -1,7 +1,5 @@
 <template>
-    <Navbar @toggleMen="toggleMen"
-            @toggleWomen="toggleWomen"
-            @toggleNew="toggleNew" />
+    <Navbar @toggle="toggle" />
 
     <div id="home">
         <div class="container" v-if="showNew && !showFiltered">
@@ -79,23 +77,12 @@ export default {
         }
     },
     methods: {
-        toggleNew() {
-            this.showNew = true;
-            this.showMen = false;
-            this.showWomen = false;
-            this.showFiltered = false;
-        },
-        toggleMen() {
-            this.showNew = false;
-            this.showMen = true;
-            this.showWomen = false;
-            this.showFiltered = false;
-        },
-        toggleWomen() {
-            this.showNew = false;
-            this.showMen = false;
-            this.showWomen = true;
-            this.showFiltered = false;
+        toggle(showNew, showMen, showWomen, showFiltered) {
+            console.log(showNew, showMen, showWomen, showFiltered);
+            this.showNew = showNew;
+            this.showMen = showMen;
+            this.showWomen = showWomen;
+            this.showFiltered = showFiltered;
         },
         filterClick() {
             this.showFilters = !this.showFilters;

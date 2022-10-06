@@ -8,9 +8,9 @@
 
         <div id="navbar-menu">
             <ul>
-                <li><button @click="toggleNew">New Arrivals</button></li>
-                <li><button @click="toggleMen">Men</button></li>
-                <li><button @click="toggleWomen">Women</button></li>
+                <li><button @click="toggle(true, false, false, false)">New Arrivals</button></li>
+                <li><button @click="toggle(false, true, false, false)">Men</button></li>
+                <li><button @click="toggle(false, false, true, false)">Women</button></li>
             </ul>
         </div>
 
@@ -29,14 +29,8 @@
 <script>
 export default {
     methods: {
-        toggleNew() {
-            this.$emit('toggleNew');
-        },
-        toggleMen() {
-            this.$emit('toggleMen');
-        },
-        toggleWomen() {
-            this.$emit('toggleWomen');
+        toggle(showNew, showMen, showWomen, showFiltered) {
+            this.$emit('toggle', showNew, showMen, showWomen, showFiltered);
         }
     }
 }
