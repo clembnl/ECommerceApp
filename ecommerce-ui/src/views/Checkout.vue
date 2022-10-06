@@ -5,7 +5,7 @@
             <div class="alert">
                 While making payment use card number 4242 4242 4242 4242 and enter random  cvv (3 digit)
             </div>
-            <button class="btn" @click="goToCheckout()">
+            <button class="no-btn" @click="goToCheckout()">
                 Make Payment
             </button>
         </div>
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-const axios = require('axios')
+const axios = require('axios');
 
 export default {
     name: 'Checkout',
@@ -24,7 +24,6 @@ export default {
             token: null,
             sessionId: null,
             checkoutBodyArray: [],
-            baseURL: '',
         }
     },
     methods: {
@@ -49,9 +48,9 @@ export default {
         },
 
         // get all cart Items for the user
-        getAllCartItems() {
-            axios
-                .get(`${this.baseURL}cart/?token=${this.token}`)
+        async getAllCartItems() {
+            await axios
+                .get(`api/cart/?token=${this.token}`)
                 .then((response) => {
                     if (response.status === 200) {
                         let cartItems = response.data.cartItems
@@ -59,7 +58,7 @@ export default {
                         cartItems.forEach((item) => {
                             this.checkoutBodyArray.push({
                                 productName: item.product.name,
-                                quatity: item.quantity,
+                                quantity: item.quantity,
                                 price: item.product.price,
                                 productId: item.product.id
                             })
@@ -70,9 +69,9 @@ export default {
                     console.log('err', err);
                 });
         },
-        goToCheckout() {
-            axios
-                .post(`${this.baseURL}order/create-checkout-session`,
+        async goToCheckout() {
+            await axios
+                .post(`api/order/create-checkout-session`,
                         this.checkoutBodyArray)
                 .then((response) => {
                     localStorage.setItem("sessionId", response.data.sessionId);
@@ -83,14 +82,44 @@ export default {
                 });
         },
     },
-    mounted() {
+    async mounted() {
         this.token = localStorage.getItem('token');
 
         this.includeStripe('js.stripe.com/v3/', function(){
             this.configureStripe();
         }.bind(this));
 
-        this.getAllCartItems();
+        await this.getAllCartItems();
     }
 }
 </script>
+
+<style scoped>
+.ckeckout .redirect {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+}
+.ckeckout .redirect h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+}
+
+.ckeckout .redirect {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+}
+
+.no-btn {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        margin-left: 0;
+        color: black;
+        border: 1px solid black;
+        background-color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        font-size: 1.2em;
+        padding: 5px 12px 5px 12px;
+        border-radius: 25px;
+    }
+</style>

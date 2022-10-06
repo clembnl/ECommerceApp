@@ -1,13 +1,15 @@
 <template>
     <div class="card">
         <div class="card-img">
-            <img 
-                class="card-img-top"
-                :src="product.imageURL"
-                width="350"
-                height="350"
-                alt="card image cap"
-            />
+            <router-link :to=" { name: 'ShowDetails', params: { id: product.id } }" >
+                <img 
+                    class="card-img-top"
+                    :src="product.imageURL"
+                    width="350"
+                    height="350"
+                    alt="card image cap"
+                />
+            </router-link>
         </div>
 
         <div class="card-body">

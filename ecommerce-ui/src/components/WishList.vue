@@ -3,7 +3,7 @@
         <h2>My wishlist</h2>
         <div>
             <div v-for="product of products" :key="product.id" class="wishlist-products">
-                <ProductCard :product="product"> </ProductCard>
+                <ProductCard :product="product" id="wishlist-item"> </ProductCard>
             </div>
         </div>
     </div>
@@ -54,7 +54,15 @@ export default {
     }
 
     .wishlist-products {
-        width: 300px;
+        width: 400px;
         margin: auto;
+    }
+
+    #wishlist-item {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border: 1px solid burlywood;
+        border-radius: 20px;
+        padding: 15px;
     }
 </style>
