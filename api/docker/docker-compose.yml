@@ -32,8 +32,8 @@ services:
 
   api:
     image: clementbonal/ecommerce-api:1.2
-#    build:
-#      context: .
+    build:
+      context: .
     container_name: api
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres

@@ -1,10 +1,13 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import Admin from '../views/Admin.vue'
-import Cart from '../views/Cart.vue'
-import Checkout from '../views/Checkout.vue'
-import ShowDetails from "../views/Product/ShowDetails"
-import User from '../views/User'
+import { createRouter, createWebHashHistory } from 'vue-router';
+import Home from '../views/Home.vue';
+import Admin from '../views/Admin.vue';
+import Cart from '../views/Cart.vue';
+import Checkout from '../views/Checkout.vue';
+import ShowDetails from "../views/Product/ShowDetails";
+import User from '../views/User';
+import Success from '../views/Order/Success.vue';
+import Failed from '../views/Order/Failed.vue';
+import OrderHistory from '../views/Order/OrderHistory.vue';
 
 const routes = [
   {
@@ -42,6 +45,24 @@ const routes = [
     path: "/user",
     name: "User",
     component: User
+  },
+  //Payment success page
+  {
+    path: "/payment/success",
+    name: "Success",
+    component: Success
+  },
+  //Payment failed page
+  {
+    path: "/payment/failed",
+    name: "Failed",
+    component: Failed
+  },
+  //Order history page
+  {
+    path: '/orders',
+    name: 'OrderHistory',
+    component: OrderHistory
   }
 ]
 
