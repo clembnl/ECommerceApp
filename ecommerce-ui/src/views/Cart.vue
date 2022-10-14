@@ -1,7 +1,5 @@
 <template>
-    <Navbar @toggleMen="toggleMen"
-        @toggleWomen="toggleWomen"
-        @toggleNew="toggleNew" />
+    <Navbar @toggle="toggle" />
 
     <div class="container">
         <div class="row">
@@ -87,28 +85,12 @@ export default {
         checkout() {
             this.$router.push({ name: 'Checkout' });
         },
-        toggleNew() {
+        toggle(showNew, showMen, showWomen, showFiltered) {
             this.$router.push({name: "Home", params: {
-                showNew: true,
-                showMen: false,
-                showWomen: false,
-                showFiltered: false
-            }})
-        },
-        toggleMen() {
-            this.$router.push({name: "Home", params: {
-                showNew: false,
-                showMen: true,
-                showWomen: false,
-                showFiltered: false
-            }})
-        },
-        toggleWomen() {
-            this.$router.push({name: "Home", params: {
-                showNew: false,
-                showMen: false,
-                showWomen: true,
-                showFiltered: false
+                collection: showNew,
+                men: showMen,
+                women: showWomen,
+                filter: showFiltered
             }})
         }
     },

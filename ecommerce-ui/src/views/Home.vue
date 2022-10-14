@@ -20,7 +20,7 @@
             </div>
             <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
             <div class="row">
-                <ProductCard v-for="item in this.men" :product="item" :key="item.id" />
+                <ProductCard v-for="item in this.mens" :product="item" :key="item.id" />
             </div>
         </div>
 
@@ -31,7 +31,7 @@
             </div>
             <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
             <div class="row">
-                <ProductCard v-for="item in this.women" :product="item" :key="item.id" />
+                <ProductCard v-for="item in this.womens" :product="item" :key="item.id" />
             </div>
         </div>
 
@@ -61,19 +61,20 @@ export default {
         ProductCard,
         Navbar,
     },
+    props: ['collection', 'men', 'women', 'filter'],
     data() {
         return {
             products: [],
             categories: [],
             newArrivals: [],
-            men: [],
-            women: [],
+            mens: [],
+            womens: [],
             filtered: [],
             showFilters: false,
             showNew: true,
             showMen: false,
             showWomen: false,
-            showFiltered: false
+            showFiltered: false,
         }
     },
     methods: {
@@ -141,12 +142,18 @@ export default {
             this.showFiltered = true;
         }
     },
-    mounted() {
+    beforeMount() {
         this.fetchData().then(() => {
             this.newArrivals = this.products.filter(product => product.categoryId === 16);
-            this.men = this.products.filter(product => product.categoryId === 17);
-            this.women = this.products.filter(product => product.categoryId === 18);
+            this.mens = this.products.filter(product => product.categoryId === 17);
+            this.womens = this.products.filter(product => product.categoryId === 18);
         })
+        if (this.collection) {
+            this.showNew = this.collection === 'true' ? true : false;
+            this.showMen = this.men  === 'true' ? true : false
+            this.showWomen = this.women  === 'true' ? true : false
+            this.showFiltered = this.filter  === 'true' ? true : false
+        }
     },
 }
 </script>

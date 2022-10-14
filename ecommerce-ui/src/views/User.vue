@@ -1,7 +1,5 @@
 <template>
-    <Navbar @toggleMen="toggleMen"
-            @toggleWomen="toggleWomen"
-            @toggleNew="toggleNew" />
+    <Navbar @toggle="toggle" />
 
     <div id="user">
         <SignIn v-if="!token && displaySignIn" @toggleSignUp="toggleSignUp"></SignIn>
@@ -45,25 +43,12 @@ export default {
             localStorage.removeItem("token");
             this.token = null;
         },
-        toggleNew() {
+        toggle(showNew, showMen, showWomen, showFiltered) {
             this.$router.push({name: "Home", params: {
-                showNew: true,
-                showMen: false,
-                showWomen: false
-            }})
-        },
-        toggleMen() {
-            this.$router.push({name: "Home", params: {
-                showNew: false,
-                showMen: true,
-                showWomen: false
-            }})
-        },
-        toggleWomen() {
-            this.$router.push({name: "Home", params: {
-                showNew: false,
-                showMen: false,
-                showWomen: true
+                collection: showNew,
+                men: showMen,
+                women: showWomen,
+                filter: showFiltered
             }})
         }
     },
