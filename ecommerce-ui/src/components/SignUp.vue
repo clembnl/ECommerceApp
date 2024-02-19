@@ -68,31 +68,39 @@ export default {
     methods: {
         async signup(e) {
             e.preventDefault();
-            if (this.password === this.confirmPassword) {
-                // call signup api
-                const user = {
-                email: this.email,
-                firstName: this.firstName,
-                lastName: this.lastName,
-                password: this.password,
-                };
-                console.log("user", user);
-                await axios
-                .post('api/user/signup', user)
-                .then((res) => {
-                    this.$router.replace("/");
-                    localStorage.setItem("token", res.data.token);
+            if (/^[^@]+@\w+(\.\w+)+\w$/.test(this.email)) {
+                if (this.password === this.confirmPassword) {
+                    // call signup api
+                    const user = {
+                    email: this.email,
+                    firstName: this.firstName,
+                    lastName: this.lastName,
+                    password: this.password,
+                    };
+                    await axios
+                    .post('api/user/signup', user)
+                    .then((res) => {
+                        this.$router.replace("/");
+                        localStorage.setItem("token", res.data.token);
+                        swal({
+                        text: "User signup successful",
+                        icon: "success",
+                        });
+                    })
+                    .catch((err) => console.log("err", err));
+                } else {
+                    // show some error
                     swal({
-                    text: "User signup successful",
-                    icon: "success",
+                        text: "passwords don't match",
+                        icon: "error",
                     });
-                })
-                .catch((err) => console.log("err", err));
-            } else {
+                }
+            }
+            else {
                 // show some error
                 swal({
-                text: "passwords dont match",
-                icon: "error",
+                    text: "Invalid email",
+                    icon: "error",
                 });
             }
         },
