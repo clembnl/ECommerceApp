@@ -19,7 +19,7 @@
           </p>
           <h3>{{ product.price }}€</h3>
         </div>
-        <div class="display-bottom">
+        <div class="display-bottom" v-if="role !=='admin'">
           <div>
             <div class="input-group">
               <div>
@@ -37,6 +37,40 @@
           <button id="wishlist-button" @click="addToWishlist()">
             {{ wishListString }}
           </button>
+        </div>
+        <div class="display-edit" v-if="role === 'admin'">
+          <form @submit="edit" class="edit-form">
+            <div class="form-group">
+              <label>Brand : </label>
+              <input v-model="brand" type="texte" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Category : </label>
+              <select v-model="categoryId" type="number" class="form-control">
+                <option value=16>New Collection</option>
+                <option value=17>Men</option>
+                <option value=18>Women</option>
+                <option value=0>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+                <label>Product Name : </label>
+                <input v-model="name" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Price : </label>
+              <input type="number" v-model="price" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Description : </label>
+              <input type="text" v-model="description" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label>Image URL : </label>
+              <input v-model="imageURL" type="text" class="form-control" />
+            </div>
+            <button class="btn">Edit Product</button>
+          </form>
         </div>
       </div>
     </div>
@@ -64,6 +98,7 @@ export default {
       },
       quantity: 1,
       wishListString: "Add to wishlist",
+      role: this.$route.params.type
     };
   },
   methods: {
@@ -144,6 +179,29 @@ export default {
           }
         })
         .catch((err) => console.log("err", err));
+    },
+    edit() {
+      console.log(this.role);
+      if (this.role === 'admin') {
+        const product = {
+          name: this.name,
+          imageURL: this.imageURL,
+          price: this.price,
+          description: this.description,
+          categoryId: this.categoryId,
+          brand: this.brand
+        };
+        console.log(this.imageURL, product.imageURL);
+        axios
+          .put(`api/product/update/${this.product.id}`, product)
+          .then(() => {
+              swal({
+                  text: "Product Updated Sucessfully",
+                  icon: "success",
+              });
+          })
+          .catch((err) => console.log("err", err));
+      }
     }
   },
   mounted() {
@@ -160,15 +218,17 @@ export default {
     );
     */
     this.token = localStorage.getItem("token");
-    axios
-      .get(`api/wishlist/${this.token}`)
-      .then((res) => {
-        for (const wishlistProduct of res.data) {
-            if (wishlistProduct.product.id == this.product.id) {
-              this.wishListString = "Added to Wishlist";
+    if (this.role !== 'admin') {
+      axios
+        .get(`api/wishlist/${this.token}`)
+        .then((res) => {
+          for (const wishlistProduct of res.data) {
+              if (wishlistProduct.product.id == this.product.id) {
+                this.wishListString = "Added to Wishlist";
+              }
             }
-          }
-      })
+        });
+    }
   },
 }
 </script>
@@ -216,6 +276,7 @@ p {
 
 .input-group {
   display: flex;
+
 }
 .input-group-text {
   font-family: 'Montserrat', sans-serif;
@@ -246,5 +307,37 @@ p {
   border: 2px solid lightcoral;
   border-radius: 25px;
   background-color: white;
+}
+
+.edit-form label {
+    font-family: 'Montserrat', sans-serif;
+    margin-right: 15px;
+    font-style: italic;
+}
+
+.edit-form .form-group {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.edit-form .btn {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: white;
+    background-color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    padding: 5px 12px 5px 12px;
+    border-radius: 25px;
+    width: 100%;
+}
+
+.edit-form .form-control {
+    border-radius: 20px;
+    border: solid grey 1px;
+    font-family: 'Montserrat', sans-serif;
+    padding: 5px;
+    width: 100%;
+    margin-top: 5px;
 }
 </style>

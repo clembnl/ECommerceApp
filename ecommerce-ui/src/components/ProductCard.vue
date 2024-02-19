@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-img">
-            <router-link :to=" { name: 'ShowDetails', params: { id: product.id } }" >
+            <router-link :to=" { name: 'ShowDetails', params: { id: product.id, type: type } }" >
                 <img 
                     class="card-img-top"
                     :src="product.imageURL"
@@ -13,7 +13,7 @@
         </div>
 
         <div class="card-body">
-            <router-link :to=" { name: 'ShowDetails', params: { id: product.id } }" >
+            <router-link :to=" { name: 'ShowDetails', params: { id: product.id, type: type } }" >
                 <div class="card-title">
                     <h5 class="card-name">{{ product.name }}</h5>
                     <h5 class="card-price">${{ product.price }}</h5>
@@ -22,11 +22,6 @@
             <div class="remove-from-wishlist" v-if="wishlist" @click="$emit('removeFromWishlist')">
                 <h5 class="card-wishlist">Remove from Wishlist</h5>
             </div>
-            <!--
-            <router-link id="edit-product" :to="{ name: 'EditProduct', params: { id: product.id, product: product } }" v-show="$route.name == 'AdminProduct'">
-                <button class="btn">Edit</button>
-            </router-link>
-            -->
         </div>
     </div>
 </template>

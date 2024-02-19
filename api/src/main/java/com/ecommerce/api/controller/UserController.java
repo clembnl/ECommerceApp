@@ -30,11 +30,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /*
     @GetMapping("/all")
     public List<User> findAllUser(@RequestParam("token") String token) throws AuthenticationFailException {
         authenticationService.authenticate(token);
         return userRepository.findAll();
     }
+     */
 
     @PostMapping("/signup")
     public SignUpResponseDto Signup(@RequestBody SignUpDto signupDto) throws CustomException {

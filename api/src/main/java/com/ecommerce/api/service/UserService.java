@@ -95,7 +95,7 @@ public class UserService {
             throw new CustomException("token not present");
         }
 
-        return new SignInResponseDto ("success", token.getToken());
+        return new SignInResponseDto ("success", token.getToken(), user.getRole());
     }
 
     String hashPassword(String password) throws NoSuchAlgorithmException {

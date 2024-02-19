@@ -8,6 +8,8 @@ import User from '../views/User';
 import Success from '../views/Order/Success.vue';
 import Failed from '../views/Order/Failed.vue';
 import OrderHistory from '../views/Order/OrderHistory.vue';
+import Products from '../views/Product/Products.vue';
+import AddProduct from '../views/Product/AddProduct.vue';
 
 const routes = [
   {
@@ -21,6 +23,20 @@ const routes = [
     path: "/admin",
     name: "Admin",
     component: Admin,
+  },
+  //admin products page
+  {
+    path: "/admin/products",
+    name: "AdminProducts",
+    component: Products,
+    props: true
+  },
+  //admin add product
+  {
+    path: "/admin/product/add",
+    name: "AddProduct",
+    component: AddProduct,
+    props: true
   },
   //cart page
   {

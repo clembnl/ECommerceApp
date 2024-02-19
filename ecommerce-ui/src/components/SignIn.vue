@@ -38,12 +38,22 @@ export default {
             await axios
                 .post('api/user/signin', body)
                 .then((res) => {
-                this.$router.replace("/");
-                localStorage.setItem("token", res.data.token);
-                swal({
-                    text: "Login successful",
-                    icon: "success",
-                });
+                    if (res.data.role === 'admin' && this.$route.name === 'Admin') {
+                        this.$emit('signin', res.data.role);
+                        swal({
+                            text: "Login successful",
+                            icon: "success",
+                        });
+                    }
+                    else {
+                        this.$router.replace("/");
+                        localStorage.setItem("token", res.data.token);
+                        swal({
+                            text: "Login successful",
+                            icon: "success",
+                        });
+                    }
+
                 })
                 .catch((err) => console.log("err", err));
             },

@@ -44,6 +44,22 @@ public class ProductService {
     }
 
     public void updateProduct(Integer productID, ProductDto productDto, Category category) {
+        Product originalProduct = getProductById(productID);
+        if (productDto.getName() == null || productDto.getName().length() == 0) {
+            productDto.setName(originalProduct.getName());
+        }
+        if (productDto.getImageURL() == null || productDto.getImageURL().length() == 0) {
+            productDto.setImageURL(originalProduct.getImageURL());
+        }
+        if (productDto.getDescription() == null || productDto.getDescription().length() == 0) {
+            productDto.setDescription(originalProduct.getDescription());
+        }
+        if (productDto.getPrice() == 0) {
+            productDto.setPrice(originalProduct.getPrice());
+        }
+        if (productDto.getBrand() == null || productDto.getBrand().length() == 0 ) {
+            productDto.setBrand(originalProduct.getBrand());
+        }
         Product product = getProductFromDto(productDto, category);
         product.setId(productID);
         productRepository.save(product);
