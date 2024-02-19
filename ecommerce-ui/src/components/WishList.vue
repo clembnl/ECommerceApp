@@ -3,7 +3,7 @@
         <h2>My wishlist</h2>
         <div>
             <div v-for="product of products" :key="product.id" class="wishlist-products">
-                <ProductCard :product="product" id="wishlist-item"> </ProductCard>
+                <ProductCard :product="product" id="wishlist-item" :type="'wishlist'" @removeFromWishlist="removeFromWishlist"> </ProductCard>
             </div>
         </div>
     </div>
@@ -35,6 +35,18 @@ export default {
                     console.log("err", err);
                 });
         },
+        removeFromWishlist(itemId) {
+            axios
+                .delete(`api/wishlist/delete/${itemId}/?token=${this.token}`)
+                .then(async (response) => {
+                    if (response.status === 200) {
+                        this.fetchWishList();
+                    }
+                })
+                .catch((error) => {
+                    console.log('error', error);
+                });
+        }
     },
   mounted() {
     this.token = localStorage.getItem("token");

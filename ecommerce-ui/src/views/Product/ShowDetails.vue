@@ -98,23 +98,26 @@ export default {
         });
         return;
       }
-      // add item to wishlist
-      axios
-        .post(`api/wishlist/add?token=${this.token}`, {
-          id: this.product.id,
-        })
-        .then((res) => {
-          if (res.status === 201) {
-            this.wishListString = "Added to Wishlist";
-            swal({
-              text: "Added to Wishlist",
-              icon: "success",
-            });
-          }
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
+
+      if (this.wishListString !== "Added to Wishlist") {
+        // add item to wishlist
+        axios
+          .post(`api/wishlist/add?token=${this.token}`, {
+            id: this.product.id,
+          })
+          .then((res) => {
+            if (res.status === 201) {
+              this.wishListString = "Added to Wishlist";
+              swal({
+                text: "Added to Wishlist",
+                icon: "success",
+              });
+            }
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
+      }
     },
     addToCart() {
       if (!this.token) {
@@ -157,6 +160,15 @@ export default {
     );
     */
     this.token = localStorage.getItem("token");
+    axios
+      .get(`api/wishlist/${this.token}`)
+      .then((res) => {
+        for (const wishlistProduct of res.data) {
+            if (wishlistProduct.id == this.product.id) {
+              this.wishListString = "Added to Wishlist";
+            }
+          }
+      })
   },
 }
 </script>

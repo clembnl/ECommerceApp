@@ -1,6 +1,8 @@
 package com.ecommerce.api.controller;
 
 import com.ecommerce.api.dto.product.ProductDto;
+import com.ecommerce.api.exception.AuthenticationFailException;
+import com.ecommerce.api.exception.WishListItemNotExistException;
 import com.ecommerce.api.model.Product;
 import com.ecommerce.api.model.User;
 import com.ecommerce.api.model.WishList;
@@ -43,7 +45,18 @@ public class WishListController {
         User user = authenticationService.getUser(token);
         WishList wishList = new WishList(user, product);
         wishListService.createWishlist(wishList);
-        return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Add to wishlist"), HttpStatus.CREATED);
+        return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Add to wishlist"),
+                HttpStatus.CREATED);
+    }
 
+    @DeleteMapping("/delete/{wishlistItemId}")
+    public ResponseEntity<ApiResponse> deleteWishListItem(@PathVariable("wishlistItemId") int itemID,
+                                                      @RequestParam("token") String token)
+            throws AuthenticationFailException, WishListItemNotExistException {
+        authenticationService.authenticate(token);
+        int userId = authenticationService.getUser(token).getId();
+        wishListService.deleteWishListItem(itemID, userId);
+        return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Item has been removed"),
+                HttpStatus.OK);
     }
 }

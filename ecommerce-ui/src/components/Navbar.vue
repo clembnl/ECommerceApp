@@ -75,6 +75,11 @@ button {
     background-color: transparent;
     border: none;
     font-size: 1.2em;
+    padding: 0;
+}
+
+button:hover{
+    text-shadow: 0 0 1px black;
 }
 
 </style>
