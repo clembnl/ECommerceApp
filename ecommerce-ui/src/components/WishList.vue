@@ -3,7 +3,7 @@
         <h2>My wishlist</h2>
         <div>
             <div v-for="product of products" :key="product.id" class="wishlist-products">
-                <ProductCard :product="product" id="wishlist-item" :type="'wishlist'" @removeFromWishlist="removeFromWishlist"> </ProductCard>
+                <ProductCard :product="product.product" id="wishlist-item" :type="'wishlist'" @removeFromWishlist="removeFromWishlist(product.id)"> </ProductCard>
             </div>
         </div>
     </div>

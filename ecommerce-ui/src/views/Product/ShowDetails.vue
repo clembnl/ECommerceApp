@@ -164,7 +164,7 @@ export default {
       .get(`api/wishlist/${this.token}`)
       .then((res) => {
         for (const wishlistProduct of res.data) {
-            if (wishlistProduct.id == this.product.id) {
+            if (wishlistProduct.product.id == this.product.id) {
               this.wishListString = "Added to Wishlist";
             }
           }

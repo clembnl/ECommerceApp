@@ -79,7 +79,7 @@ button {
 }
 
 button:hover{
-    text-shadow: 0 0 1px black;
+    text-shadow: 0 0 0.6px black;
 }
 
 </style>

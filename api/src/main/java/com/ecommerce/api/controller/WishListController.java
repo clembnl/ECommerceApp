@@ -1,20 +1,17 @@
 package com.ecommerce.api.controller;
 
-import com.ecommerce.api.dto.product.ProductDto;
 import com.ecommerce.api.exception.AuthenticationFailException;
 import com.ecommerce.api.exception.WishListItemNotExistException;
 import com.ecommerce.api.model.Product;
 import com.ecommerce.api.model.User;
 import com.ecommerce.api.model.WishList;
 import com.ecommerce.api.service.AuthenticationService;
-import com.ecommerce.api.service.ProductService;
 import com.ecommerce.api.service.WishListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,15 +25,10 @@ public class WishListController {
     private AuthenticationService authenticationService;
 
     @GetMapping("/{token}")
-    public ResponseEntity<List<ProductDto>> getWishList(@PathVariable("token") String token) {
+    public ResponseEntity<List<WishList>> getWishList(@PathVariable("token") String token) {
         int user_id = authenticationService.getUser(token).getId();
-        List<WishList> body = wishListService.readWishList(user_id);
-        List<ProductDto> products = new ArrayList<ProductDto>();
-        for (WishList wishList : body) {
-            products.add(ProductService.getDtoFromProduct(wishList.getProduct()));
-        }
-
-        return new ResponseEntity<List<ProductDto>>(products, HttpStatus.OK);
+        List<WishList> wishList = wishListService.readWishList(user_id);
+        return new ResponseEntity<List<WishList>>(wishList, HttpStatus.OK);
     }
 
     @PostMapping("/add")

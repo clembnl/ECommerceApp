@@ -19,8 +19,8 @@
                     <h5 class="card-price">${{ product.price }}</h5>
                 </div>
             </router-link>
-            <div class="remove-from-wishlist" v-if="wishlist" @click="$emit('removeFromWishlist', product.id)">
-                    <h5 class="card-wishlist">Remove from Wishlist</h5>
+            <div class="remove-from-wishlist" v-if="wishlist" @click="$emit('removeFromWishlist')">
+                <h5 class="card-wishlist">Remove from Wishlist</h5>
             </div>
             <!--
             <router-link id="edit-product" :to="{ name: 'EditProduct', params: { id: product.id, product: product } }" v-show="$route.name == 'AdminProduct'">
@@ -76,10 +76,14 @@ export default {
 }
 
 .card-wishlist {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
     text-align: center;
     margin: 0;
     opacity: 0.5;
+}
+
+.card-wishlist:hover {
+    color: red;
 }
 
 </style>
