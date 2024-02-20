@@ -1,7 +1,5 @@
 <template>
-  <Navbar @toggleMen="toggleMen"
-          @toggleWomen="toggleWomen"
-          @toggleNew="toggleNew" />
+  <Navbar @toggle="toggle" />
 
   <div class="container">
     <div class="row">
@@ -102,25 +100,12 @@ export default {
     };
   },
   methods: {
-    toggleNew() {
+    toggle(showNew, showMen, showWomen, showFiltered) {
       this.$router.push({name: "Home", params: {
-        showNew: true,
-        showMen: false,
-        showWomen: false
-      }})
-    },
-    toggleMen() {
-      this.$router.push({name: "Home", params: {
-        showNew: false,
-        showMen: true,
-        showWomen: false
-      }})
-    },
-    toggleWomen() {
-      this.$router.push({name: "Home", params: {
-        showNew: false,
-        showMen: false,
-        showWomen: true
+          collection: showNew,
+          men: showMen,
+          women: showWomen,
+          filter: showFiltered
       }})
     },
     addToWishlist() {

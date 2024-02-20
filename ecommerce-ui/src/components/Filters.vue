@@ -28,6 +28,7 @@
             </li>
             <li><select id="brands" class="select">
                     <option value="">Brand</option>
+                    <option value="Adidas">Adidas</option>
                     <option value="Nike">Nike</option>
                     <option value="Yeezy">Yeezy</option>
                     <option value="Balenciaga">Balenciaga</option>

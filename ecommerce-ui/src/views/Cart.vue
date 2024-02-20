@@ -21,7 +21,9 @@
                     <p>Total:
                         <span>${{ cartItem.product.price * cartItem.quantity }}</span>
                     </p>
-                    <a href="#" @click="deleteItem(cartItem.id)">Remove From Cart</a>
+                    <div class="remove-from-cart" @click="deleteItem(cartItem.id)">
+                        <h5>Remove From Cart</h5>
+                    </div>
                 </div>
             </div>
         </div>
@@ -29,7 +31,7 @@
         <!-- Display total price -->
         <div class="cart-total-price">
             <h3>Total : ${{ totalCost }}</h3>
-            <button :disabled="isDisabled()" type="button" class="btn" @click="checkout">Confirm Order</button>
+            <button :disabled="isDisabled()" type="button" class="btn" @click="checkout" v-if="totalCost != 0">Confirm Order</button>
         </div>
     </div>
 </template>
@@ -145,16 +147,14 @@ export default {
     margin-bottom: 7px;
 }
 
-.container a {
-    text-decoration: none;
+.remove-from-cart h5 {
     font-family: 'Poppins', sans-serif;
-    color: black;
-    opacity: 0.7;
-    font-size: 0.9em;
-    font-weight: normal;
+    text-align: center;
+    margin: 0;
+    opacity: 0.5;
 }
 
-.container a:hover {
+.remove-from-cart h5:hover {
     color: red;
 }
 

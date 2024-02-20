@@ -2,7 +2,7 @@
     <Navbar @toggle="toggle" />
 
     <div id="orders">
-        <h2>Your Orders</h2>
+        <h2>My Orders</h2>
         <div>
             <div v-for="order in orderList" :key="order.id" class="orders-list">
                 <div class="orders-items">
