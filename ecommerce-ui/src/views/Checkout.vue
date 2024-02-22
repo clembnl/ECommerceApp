@@ -13,7 +13,8 @@
 </template>
 
 <script>
-const axios = require('axios');
+import axios from "axios";
+import authHeader from "../services/auth-header.js";
 
 export default {
     name: 'Checkout',
@@ -21,7 +22,6 @@ export default {
         return {
             stripeAPIToken: 'pk_test_51KDyZCHbpACDZqsEPbtd09DHObPDpZDbf7LouqB9BJdbIgAPyrE6g228JRgu9bkwRBkFT0neqn2YYqztG4OuWrfa00Ufy7YkAk',
             stripe: '',
-            token: null,
             sessionId: null,
             checkoutBodyArray: [],
         }
@@ -50,7 +50,7 @@ export default {
         // get all cart Items for the user
         async getAllCartItems() {
             await axios
-                .get(`api/cart/?token=${this.token}`)
+                .get('api/cart', { headers: authHeader() })
                 .then((response) => {
                     if (response.status === 200) {
                         let cartItems = response.data.cartItems
@@ -72,7 +72,7 @@ export default {
         async goToCheckout() {
             await axios
                 .post(`api/order/create-checkout-session`,
-                        this.checkoutBodyArray)
+                        this.checkoutBodyArray, { headers: authHeader() })
                 .then((response) => {
                     localStorage.setItem("sessionId", response.data.sessionId);
                     return response.data;
@@ -84,8 +84,6 @@ export default {
         },
     },
     async mounted() {
-        this.token = localStorage.getItem('token');
-
         this.includeStripe('js.stripe.com/v3/', function(){
             this.configureStripe();
         }.bind(this));

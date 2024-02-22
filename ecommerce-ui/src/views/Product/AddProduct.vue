@@ -50,6 +50,7 @@ import router from '@/router';
 import Navbar from '../../components/Navbar.vue';
 import axios from 'axios';
 import swal from "sweetalert";
+import authHeader from "../../services/auth-header.js";
 
 export default {
     name: 'AddProduct',
@@ -91,8 +92,24 @@ export default {
                     })
                     .catch((err) => console.log("err", err));
             }
+        },
+        getRole() {
+            if (this.token) {
+                axios
+                .get('/api/user/role', { headers: authHeader() })
+                .then((res) => {
+                    this.role = res.data.role
+                })
+                .catch((err) => console.log("err", err));
+            }
         }
     },
+    mounted() {
+        this.token = localStorage.getItem("token");
+        if (!this.role) {
+            this.getRole();
+        }
+    }
 }
 </script>
 

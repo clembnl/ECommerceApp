@@ -6,13 +6,16 @@ import com.ecommerce.api.exception.AuthenticationFailException;
 import com.ecommerce.api.exception.OrderNotFoundException;
 import com.ecommerce.api.model.Order;
 import com.ecommerce.api.model.User;
-import com.ecommerce.api.service.AuthenticationService;
+import com.ecommerce.api.repository.UserRepository;
 import com.ecommerce.api.service.OrderService;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,10 +28,11 @@ public class OrderController {
     private OrderService orderService;
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private UserRepository userRepository;
 
     // stripe create session API
     @PostMapping("/create-checkout-session")
+    @PreAuthorize("hasRole('user') or hasRole('admin')")
     public ResponseEntity<StripeResponse> checkoutList(@RequestBody List<CheckoutItemDto> checkoutItemDtoList)
             throws StripeException {
         // create the stripe session
@@ -40,13 +44,13 @@ public class OrderController {
 
     // place order after checkout
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> placeOrder(@RequestParam("token") String token,
-                                                  @RequestParam("sessionId") String sessionId)
+    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    public ResponseEntity<ApiResponse> placeOrder(@RequestParam("sessionId") String sessionId,
+                                                  Authentication authentication)
             throws AuthenticationFailException {
-        // validate token
-        authenticationService.authenticate(token);
         // retrieve user
-        User user = authenticationService.getUser(token);
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = userRepository.findByUsername(userDetails.getUsername());
         // place the order
         orderService.placeOrder(user, sessionId);
         return new ResponseEntity<>(new ApiResponse(true, "Order has been placed"),
@@ -54,26 +58,25 @@ public class OrderController {
     }
 
     // get all orders
+    /*
     @GetMapping("/")
-    public ResponseEntity<List<Order>> getAllOrders(@RequestParam("token") String token)
+    public ResponseEntity<List<Order>> getAllOrders()
             throws AuthenticationFailException {
-        // validate token
-        authenticationService.authenticate(token);
         // retrieve user
-        User user = authenticationService.getUser(token);
+        User user = ?;
         // get orders
         List<Order> orderDtoList = orderService.listOrders(user);
 
         return new ResponseEntity<>(orderDtoList, HttpStatus.OK);
     }
+    */
 
 
     // get orderitems for an order
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOrderById(@PathVariable("id") Integer id, @RequestParam("token") String token)
+    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    public ResponseEntity<Object> getOrderById(@PathVariable("id") Integer id)
             throws AuthenticationFailException {
-        // validate token
-        authenticationService.authenticate(token);
         try {
             Order order = orderService.getOrder(id);
             return new ResponseEntity<>(order,HttpStatus.OK);

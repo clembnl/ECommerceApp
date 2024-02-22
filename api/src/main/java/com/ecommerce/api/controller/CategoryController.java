@@ -6,6 +6,7 @@ import com.ecommerce.api.utils.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<ApiResponse> createCategory(@RequestBody Category category) {
         if (Helper.notNull(categoryService.readCategory(category.getCategoryName()))) {
             return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category already exists"),
@@ -35,6 +37,7 @@ public class CategoryController {
     }
 
     @PutMapping("/update/{categoryID}")
+    @PreAuthorize("hasRole('admin')")
     public ResponseEntity<ApiResponse> updateCategory(@PathVariable("categoryID") Integer categoryID,
                                                       @RequestBody Category category) {
         // Check to see if the category exists.

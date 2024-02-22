@@ -4,7 +4,7 @@
         <form @submit="signin" class="signin-form">
             <div class="form-group">
                 <label>Your email :</label>
-                <input v-model="email" type="email" class="form-control" required/>
+                <input v-model="email" class="form-control" required/>
             </div>
             <div class="form-group">
                 <label>Your password :</label>

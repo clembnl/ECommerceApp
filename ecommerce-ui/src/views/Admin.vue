@@ -2,9 +2,12 @@
     <Navbar @toggle="toggle" />
 
     <div id="user">
-        <SignIn v-if="!token && displaySignIn" @signin="signin"></SignIn>
+        <SignIn v-if="!token" @signin="signin"></SignIn>
         <div class="container" v-if="role === 'admin'">
             <h1>Admin Panel</h1>
+            <router-link :to=" { name: 'AddProduct', params: {role: role} }" >
+                <button class="btn">Add Product</button>
+            </router-link>
             <router-link :to="{ name: 'AdminProducts', params: {role: role} }">
                 <button class="btn">Edit Products</button>
             </router-link>
@@ -14,8 +17,10 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar'
-import SignIn from '../components/SignIn'
+import axios from 'axios';
+import Navbar from '../components/Navbar';
+import SignIn from '../components/SignIn';
+import authHeader from "../services/auth-header.js";
 
 export default {
     name: 'Admin',
@@ -25,7 +30,6 @@ export default {
     },
     data() {
         return {
-            displaySignIn: true,
             token: null,
             role: null
         }
@@ -46,11 +50,22 @@ export default {
         signin(role) {
             this.role = role;
             this.displaySignIn = false
+        },
+        getRole() {
+            if (this.token) {
+                axios
+                .get('/api/user/role', { headers: authHeader() })
+                .then((res) => {
+                    this.role = res.data.role
+                })
+                .catch((err) => console.log("err", err));
+            }
         }
 
     },
     mounted() {
         this.token = localStorage.getItem("token");
+        this.getRole();
     }
 }
 </script>

@@ -17,7 +17,7 @@
           </p>
           <h3>{{ product.price }}€</h3>
         </div>
-        <div class="display-bottom" v-if="role !=='admin'">
+        <div class="display-bottom" v-if="role !== 'admin'">
           <div>
             <div class="input-group">
               <div>
@@ -79,6 +79,8 @@
 import Navbar from '../../components/Navbar.vue'
 import swal from "sweetalert";
 import axios from "axios";
+import authHeader from "../../services/auth-header.js";
+
 export default {
   name: 'ShowDetails',
   components: {
@@ -96,7 +98,7 @@ export default {
       },
       quantity: 1,
       wishListString: "Add to wishlist",
-      role: this.$route.params.type
+      role: this.$route.params.role
     };
   },
   methods: {
@@ -166,7 +168,6 @@ export default {
         .catch((err) => console.log("err", err));
     },
     edit() {
-      console.log(this.role);
       if (this.role === 'admin') {
         const product = {
           name: this.name,
@@ -187,6 +188,16 @@ export default {
           })
           .catch((err) => console.log("err", err));
       }
+    },
+    getRole() {
+      if (this.token) {
+          axios
+          .get('/api/user/role', { headers: authHeader() })
+          .then((res) => {
+              this.role = res.data.role
+          })
+          .catch((err) => console.log("err", err));
+      }
     }
   },
   mounted() {
@@ -203,6 +214,9 @@ export default {
     );
     */
     this.token = localStorage.getItem("token");
+    if (!this.role) {
+      this.getRole();
+    }
     if (this.role !== 'admin') {
       axios
         .get(`api/wishlist/${this.token}`)

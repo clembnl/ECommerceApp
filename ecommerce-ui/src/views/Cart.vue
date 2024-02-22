@@ -39,6 +39,7 @@
 <script>
 import axios from 'axios';
 import Navbar from '../components/Navbar.vue';
+import authHeader from "../services/auth-header.js";
 
 export default {
     name: 'Cart',
@@ -48,8 +49,7 @@ export default {
     data() {
         return {
             cartItems: [],
-            totalCost: 0,
-            token: null,
+            totalCost: 0
         }
     },
     methods: {
@@ -62,7 +62,7 @@ export default {
         //fetch all items in cart
         async listCartItems() {
             await axios
-                .get(`api/cart/?token=${this.token}`)
+                .get('api/cart', { headers: authHeader() })
                 .then((res) => {
                     const result = res.data;
                     this.cartItems = result.cartItems;
@@ -74,7 +74,7 @@ export default {
         },
         async deleteItem(itemId) {
             await axios
-                .delete(`api/cart/delete/${itemId}/?token=${this.token}`)
+                .delete(`api/cart/delete/${itemId}`, { headers: authHeader() })
                 .then(async (response) => {
                     if (response.status === 200) {
                         await this.listCartItems();
@@ -97,7 +97,6 @@ export default {
         }
     },
     async mounted() {
-        this.token = localStorage.getItem('token');
         await this.listCartItems();
     }
 }

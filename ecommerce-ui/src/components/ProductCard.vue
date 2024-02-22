@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <div class="card-img">
-            <router-link :to=" { name: 'ShowDetails', params: { id: product.id, type: type } }" >
+            <router-link :to=" { name: 'ShowDetails', params: { id: product.id, role: type } }" >
                 <img 
                     class="card-img-top"
                     :src="product.imageURL"
@@ -13,7 +13,7 @@
         </div>
 
         <div class="card-body">
-            <router-link :to=" { name: 'ShowDetails', params: { id: product.id, type: type } }" >
+            <router-link :to=" { name: 'ShowDetails', params: { id: product.id, role: type } }" >
                 <div class="card-title">
                     <h5 class="card-name">{{ product.name }}</h5>
                     <h5 class="card-price">${{ product.price }}</h5>

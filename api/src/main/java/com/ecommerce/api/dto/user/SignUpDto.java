@@ -1,25 +1,16 @@
 package com.ecommerce.api.dto.user;
 
 public class SignUpDto {
-    private String firstName;
-    private String lastName;
+    private String username;
     private String email;
     private String password;
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUsername(String firstName) {
+        this.username = username;
     }
 
     public String getEmail() {
