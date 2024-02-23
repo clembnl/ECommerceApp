@@ -12,6 +12,7 @@
 <script>
 import axios from "axios";
 import ProductCard from "./ProductCard.vue";
+import authHeader from "../services/auth-header.js";
 
 export default {
     name: 'WishList',
@@ -20,14 +21,13 @@ export default {
     },
     data() {
         return {
-            token: null,
-            products: null,
+            products: null
         }
     },
     methods: {
         fetchWishList() {
             axios
-                .get(`api/wishlist/${this.token}`)
+                .get('api/wishlist', {headers: authHeader()})
                 .then((res) => {
                     this.products = res.data;
                 })
@@ -37,7 +37,7 @@ export default {
         },
         removeFromWishlist(itemId) {
             axios
-                .delete(`api/wishlist/delete/${itemId}/?token=${this.token}`)
+                .delete(`api/wishlist/delete/${itemId}`, {headers: authHeader()})
                 .then(async (response) => {
                     if (response.status === 200) {
                         this.fetchWishList();
@@ -49,7 +49,6 @@ export default {
         }
     },
   mounted() {
-    this.token = localStorage.getItem("token");
     this.fetchWishList();
   }
 }

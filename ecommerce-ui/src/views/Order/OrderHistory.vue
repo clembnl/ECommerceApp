@@ -28,6 +28,7 @@
 <script>
 import axios from 'axios';
 import Navbar from '../../components/Navbar.vue';
+import authHeader from "../../services/auth-header.js";
 
 export default {
     name: 'OrderHistory',
@@ -43,7 +44,7 @@ export default {
     methods: {
         // list of order histories
         async listOrders(){
-            await axios.get(`api/order/?token=${this.token}`)
+            await axios.get('api/order', { headers: authHeader() })
                 .then((response) => {
                     if(response.status === 200){
                         // for each order populate orderList
@@ -75,7 +76,6 @@ export default {
         }
     },
     async mounted() {
-        this.token = localStorage.getItem("token");
         await this.listOrders();
     },
 };

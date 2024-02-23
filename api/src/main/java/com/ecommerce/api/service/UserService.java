@@ -6,11 +6,11 @@ import com.ecommerce.api.dto.ResponseDto;
 import com.ecommerce.api.dto.user.*;
 import com.ecommerce.api.exception.AuthenticationFailException;
 import com.ecommerce.api.exception.CustomException;
-import com.ecommerce.api.model.AuthenticationToken;
 import com.ecommerce.api.model.Role;
 import com.ecommerce.api.model.User;
 import com.ecommerce.api.repository.UserRepository;
 import com.ecommerce.api.utils.Helper;
+import com.ecommerce.api.jwt.JwtUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,6 +19,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.DatatypeConverter;
@@ -27,10 +31,13 @@ import javax.xml.bind.DatatypeConverter;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @Autowired
-    private AuthenticationService authenticationService;
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    JwtUtils jwtUtils;
 
     Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -50,20 +57,14 @@ public class UserService {
         }
 
 
-        User user = new User(signupDto.getFirstName(), signupDto.getLastName(), signupDto.getEmail(),
+        User user = new User(signupDto.getUsername(), signupDto.getEmail(),
                 Role.user, encryptedPassword );
 
-        User createdUser;
         try {
             // save the User
-            createdUser = userRepository.save(user);
-            // generate token for user
-            final AuthenticationToken authenticationToken = new AuthenticationToken(createdUser);
-            // save token in database
-            authenticationService.saveConfirmationToken(authenticationToken);
+            userRepository.save(user);
             // success in creating
-            return new SignUpResponseDto(ResponseStatus.success.toString(), MessageStrings.USER_CREATED,
-                    authenticationToken.getToken());
+            return new SignUpResponseDto(ResponseStatus.success.toString(), MessageStrings.USER_CREATED);
         } catch (Exception e) {
             // handle signup error
             throw new CustomException(e.getMessage());
@@ -71,6 +72,7 @@ public class UserService {
     }
 
     public SignInResponseDto signIn(SignInDto signinDto) throws CustomException {
+
         // first find User by email
         User user = userRepository.findByEmail(signinDto.getEmail());
         if(!Helper.notNull(user)){
@@ -88,18 +90,17 @@ public class UserService {
             throw new CustomException(e.getMessage());
         }
 
-        AuthenticationToken token = authenticationService.getToken(user);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(signinDto.getEmail(), signinDto.getPassword()));
 
-        if(!Helper.notNull(token)) {
-            // token not present
-            throw new CustomException("token not present");
-        }
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
 
-        return new SignInResponseDto ("success", token.getToken(), user.getRole());
+        return new SignInResponseDto ("success", jwt, user.getRole());
     }
 
     String hashPassword(String password) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(password.getBytes());
         byte[] digest = md.digest();
         String myHash = DatatypeConverter
@@ -108,13 +109,8 @@ public class UserService {
         return myHash;
     }
 
-    public ResponseDto createUser(String token, UserCreateDto userCreateDto) throws CustomException,
+    public ResponseDto createUser(UserCreateDto userCreateDto) throws CustomException,
             AuthenticationFailException {
-        User creatingUser = authenticationService.getUser(token);
-        if (!canCrudUser(creatingUser.getRole())) {
-            // user can't create new user
-            throw  new AuthenticationFailException(MessageStrings.USER_NOT_PERMITTED);
-        }
         String encryptedPassword = userCreateDto.getPassword();
         try {
             encryptedPassword = hashPassword(userCreateDto.getPassword());
@@ -123,13 +119,10 @@ public class UserService {
             logger.error("hashing password failed {}", e.getMessage());
         }
 
-        User user = new User(userCreateDto.getFirstName(), userCreateDto.getLastName(), userCreateDto.getEmail(),
+        User user = new User(userCreateDto.getUsername(), userCreateDto.getEmail(),
                 userCreateDto.getRole(), encryptedPassword );
-        User createdUser;
         try {
-            createdUser = userRepository.save(user);
-            final AuthenticationToken authenticationToken = new AuthenticationToken(createdUser);
-            authenticationService.saveConfirmationToken(authenticationToken);
+            userRepository.save(user);
             return new ResponseDto(ResponseStatus.success.toString(), MessageStrings.USER_CREATED);
         } catch (Exception e) {
             // handle user creation fail error

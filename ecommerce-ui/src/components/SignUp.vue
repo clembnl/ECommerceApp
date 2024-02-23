@@ -9,21 +9,10 @@
             <div class="form-row">
                 <div class="col">
                     <div class="form-group">
-                    <label>Your first name :</label>
+                    <label>Your username :</label>
                     <input
                         type="text"
-                        v-model="firstName"
-                        class="form-control"
-                        required
-                    />
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                    <label>Your last name :</label>
-                    <input
-                        type="text"
-                        v-model="lastName"
+                        v-model="username"
                         class="form-control"
                         required
                     />
@@ -59,8 +48,7 @@ export default {
     data() {
         return {
             email: null,
-            firstName: null,
-            lastName: null,
+            username: null,
             password: null,
             confirmPassword: null
         }
@@ -73,21 +61,25 @@ export default {
                     // call signup api
                     const user = {
                     email: this.email,
-                    firstName: this.firstName,
-                    lastName: this.lastName,
+                    username: this.firstName,
                     password: this.password,
                     };
                     await axios
-                    .post('api/user/signup', user)
-                    .then((res) => {
-                        this.$router.replace("/");
-                        localStorage.setItem("token", res.data.token);
-                        swal({
-                        text: "User signup successful",
-                        icon: "success",
-                        });
-                    })
-                    .catch((err) => console.log("err", err));
+                        .post('api/user/signup', user)
+                        .then(async () => {
+                            await axios
+                                    .post('api/user/signin', {email: this.email, password: this.password})
+                                    .then((res) => {
+                                        this.$router.replace("/");
+                                        localStorage.setItem("token", JSON.stringify(res.data.token));
+                                        swal({
+                                            text: "User signup successful",
+                                            icon: "success",
+                                        });
+                                    })
+                                    .catch((err) => console.log("err", err));
+                        })
+                        .catch((err) => console.log("err", err));
                 } else {
                     // show some error
                     swal({

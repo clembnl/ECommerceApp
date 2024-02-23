@@ -13,11 +13,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "email")
     private String email;
@@ -34,9 +31,8 @@ public class User {
             fetch = FetchType.LAZY)
     private List<Order> orders;
 
-    public User(String firstName, String lastName, String email, Role role, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public User(String username, String email, Role role, String password) {
+        this.username = username;
         this.email = email;
         this.role = role;
         this.password = password;
@@ -53,20 +49,12 @@ public class User {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

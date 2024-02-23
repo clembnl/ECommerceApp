@@ -5,19 +5,20 @@
   </template>
   
   <script>
-  const axios = require('axios')
+  import axios from 'axios';
+  import authHeader from "../../services/auth-header.js";
+
   export default {
       name: 'Success',
       data() {
         return {
-            token: null,
             sessionId: null,
         }
     },
     methods:{
         async saveOrder() {
             await axios
-                .post("api/order/add/?token="+this.token+"&sessionId="+this.sessionId)
+                .post("api/order/add/sessionId="+this.sessionId, { headers: authHeader() })
                     .then(()=>{
                     //window.location.href = '/order'
                     //document.getElementById("message").innerHTML = "order placed";
@@ -30,8 +31,6 @@
         }
     },
     async mounted() {
-        console.log('here');
-        this.token = localStorage.getItem("token");
         this.sessionId = localStorage.getItem("sessionId");
         await this.saveOrder()
     }
