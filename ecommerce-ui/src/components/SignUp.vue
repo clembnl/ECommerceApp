@@ -42,6 +42,7 @@
 <script>
 import axios from "axios";
 import swal from "sweetalert";
+import bcrypt from "bcryptjs";
 
 export default {
     name: 'SignUp',
@@ -61,14 +62,14 @@ export default {
                     // call signup api
                     const user = {
                     email: this.email,
-                    username: this.firstName,
+                    username: this.username,
                     password: this.password,
                     };
                     await axios
                         .post('api/user/signup', user)
                         .then(async () => {
                             await axios
-                                    .post('api/user/signin', {email: this.email, password: this.password})
+                                    .post('api/user/signin', {username: this.username, password: this.password})
                                     .then((res) => {
                                         this.$router.replace("/");
                                         localStorage.setItem("token", JSON.stringify(res.data.token));
@@ -98,6 +99,9 @@ export default {
         },
         toggleSignIn() {
             this.$emit('toggleSignIn');
+        },
+        encryptPassword(password) {
+            return bcrypt.hashSync(password, 10);
         }
     }
 }

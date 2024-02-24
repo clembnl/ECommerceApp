@@ -3,8 +3,8 @@
         <h2>Sign in to Sneakers</h2>
         <form @submit="signin" class="signin-form">
             <div class="form-group">
-                <label>Your email :</label>
-                <input v-model="email" class="form-control" required/>
+                <label>Your username :</label>
+                <input v-model="username" type="text" class="form-control" required/>
             </div>
             <div class="form-group">
                 <label>Your password :</label>
@@ -19,12 +19,13 @@
 <script>
 import axios from "axios";
 import swal from "sweetalert";
+import bcrypt from "bcryptjs";
 
 export default {
     name: 'SignIn',
     data() {
         return {
-            email: null,
+            username: null,
             password: null
         }
     },
@@ -32,7 +33,7 @@ export default {
         async signin(e) {
             e.preventDefault();
             const body = {
-                email: this.email,
+                username: this.username,
                 password: this.password,
             };
             await axios
@@ -56,11 +57,14 @@ export default {
 
                 })
                 .catch((err) => console.log("err", err));
-            },
+        },
         toggleSignUp() {
             this.$emit('toggleSignUp');
+        },
+        encryptPassword(password) {
+            return bcrypt.hashSync(password, 10);
         }
-        }
+    }
 }
 </script>
 

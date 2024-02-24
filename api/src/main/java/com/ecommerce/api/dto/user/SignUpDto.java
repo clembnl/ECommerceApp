@@ -9,7 +9,7 @@ public class SignUpDto {
         return username;
     }
 
-    public void setUsername(String firstName) {
+    public void setUsername(String username) {
         this.username = username;
     }
 

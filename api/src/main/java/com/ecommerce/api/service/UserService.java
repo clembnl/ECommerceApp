@@ -12,9 +12,6 @@ import com.ecommerce.api.repository.UserRepository;
 import com.ecommerce.api.utils.Helper;
 import com.ecommerce.api.jwt.JwtUtils;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,9 +20,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.xml.bind.DatatypeConverter;
 
 @Service
 public class UserService {
@@ -35,6 +31,9 @@ public class UserService {
 
     @Autowired
     AuthenticationManager authenticationManager;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     @Autowired
     JwtUtils jwtUtils;
@@ -47,18 +46,14 @@ public class UserService {
             // If the email address has been registered then throw an exception.
             throw new CustomException("User already exists");
         }
-        // first encrypt the password
-        String encryptedPassword = signupDto.getPassword();
-        try {
-            encryptedPassword = hashPassword(signupDto.getPassword());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            logger.error("hashing password failed {}", e.getMessage());
+        // Check to see if the current username has already been registered.
+        if (Helper.notNull(userRepository.findByUsername(signupDto.getUsername()))) {
+            // If the username has been registered then throw an exception.
+            throw new CustomException("User already exists");
         }
 
-
         User user = new User(signupDto.getUsername(), signupDto.getEmail(),
-                Role.user, encryptedPassword );
+                Role.user, encoder.encode(signupDto.getPassword()));
 
         try {
             // save the User
@@ -73,54 +68,39 @@ public class UserService {
 
     public SignInResponseDto signIn(SignInDto signinDto) throws CustomException {
 
-        // first find User by email
-        User user = userRepository.findByEmail(signinDto.getEmail());
+        /*
+        // first find User by username
+        User user = userRepository.findByUsername(signinDto.getUsername());
         if(!Helper.notNull(user)){
             throw  new AuthenticationFailException("user not present");
         }
-        try {
-            // check if password is right
-            if (!user.getPassword().equals(hashPassword(signinDto.getPassword()))){
-                // password does not match
-                throw new AuthenticationFailException(MessageStrings.WRONG_PASSWORD);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            logger.error("hashing password failed {}", e.getMessage());
-            throw new CustomException(e.getMessage());
+        // check if password is right
+        if (!user.getPassword().equals(signinDto.getPassword())){
+            // password does not match
+            throw new AuthenticationFailException(MessageStrings.WRONG_PASSWORD);
         }
+        */
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(signinDto.getEmail(), signinDto.getPassword()));
+                new UsernamePasswordAuthenticationToken(signinDto.getUsername(), signinDto.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
-        return new SignInResponseDto ("success", jwt, user.getRole());
-    }
+        // first find User by username
+        User user = userRepository.findByUsername(signinDto.getUsername());
+        if(!Helper.notNull(user)){
+            throw  new AuthenticationFailException("user not present");
+        }
 
-    String hashPassword(String password) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(password.getBytes());
-        byte[] digest = md.digest();
-        String myHash = DatatypeConverter
-                .printHexBinary(digest).toUpperCase();
-        System.out.println(myHash);
-        return myHash;
+        return new SignInResponseDto ("success", jwt, user.getRole());
     }
 
     public ResponseDto createUser(UserCreateDto userCreateDto) throws CustomException,
             AuthenticationFailException {
-        String encryptedPassword = userCreateDto.getPassword();
-        try {
-            encryptedPassword = hashPassword(userCreateDto.getPassword());
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-            logger.error("hashing password failed {}", e.getMessage());
-        }
 
         User user = new User(userCreateDto.getUsername(), userCreateDto.getEmail(),
-                userCreateDto.getRole(), encryptedPassword );
+                userCreateDto.getRole(), userCreateDto.getPassword() );
         try {
             userRepository.save(user);
             return new ResponseDto(ResponseStatus.success.toString(), MessageStrings.USER_CREATED);
