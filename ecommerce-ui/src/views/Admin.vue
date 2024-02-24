@@ -3,7 +3,7 @@
 
     <div id="user">
         <SignIn v-if="!token" @signin="signin"></SignIn>
-        <div class="container" v-if="role === 'ROLE_ADMIN'">
+        <div class="container" v-if="role === 'ROLE_ADMIN' && token">
             <h1>Admin Panel</h1>
             <router-link :to=" { name: 'AddProduct', params: {role: role} }" >
                 <button class="btn">Add Product</button>

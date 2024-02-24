@@ -144,9 +144,9 @@ export default {
     },
     beforeMount() {
         this.fetchData().then(() => {
-            this.newArrivals = this.products.filter(product => product.categoryId === 16);
-            this.mens = this.products.filter(product => product.categoryId === 17);
-            this.womens = this.products.filter(product => product.categoryId === 18);
+            this.newArrivals = this.products.filter(product => product.categoryId === 13);
+            this.mens = this.products.filter(product => product.categoryId === 14);
+            this.womens = this.products.filter(product => product.categoryId === 15);
         })
         if (this.collection) {
             this.showNew = this.collection === 'true' ? true : false;

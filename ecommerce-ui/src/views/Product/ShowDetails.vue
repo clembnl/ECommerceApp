@@ -15,7 +15,7 @@
           <p>
             {{ product.description }}
           </p>
-          <h3>{{ product.price }}€</h3>
+          <h3>${{ product.price }}</h3>
         </div>
         <div class="display-bottom" v-if="role !== 'ROLE_ADMIN'">
           <div>
@@ -45,9 +45,9 @@
             <div class="form-group">
               <label>Category : </label>
               <select v-model="categoryId" type="number" class="form-control">
-                <option value=16>New Collection</option>
-                <option value=17>Men</option>
-                <option value=18>Women</option>
+                <option value=13>New Collection</option>
+                <option value=14>Men</option>
+                <option value=15>Women</option>
                 <option value=0>Other</option>
               </select>
             </div>

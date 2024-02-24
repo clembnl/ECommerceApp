@@ -19,7 +19,6 @@
 <script>
 import axios from "axios";
 import swal from "sweetalert";
-import bcrypt from "bcryptjs";
 
 export default {
     name: 'SignIn',
@@ -62,9 +61,6 @@ export default {
         },
         toggleSignUp() {
             this.$emit('toggleSignUp');
-        },
-        encryptPassword(password) {
-            return bcrypt.hashSync(password, 10);
         }
     }
 }
