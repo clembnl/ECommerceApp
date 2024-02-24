@@ -17,7 +17,7 @@
           </p>
           <h3>{{ product.price }}€</h3>
         </div>
-        <div class="display-bottom" v-if="role !== 'admin'">
+        <div class="display-bottom" v-if="role !== 'ROLE_ADMIN'">
           <div>
             <div class="input-group">
               <div>
@@ -36,7 +36,7 @@
             {{ wishListString }}
           </button>
         </div>
-        <div class="display-edit" v-if="role === 'admin'">
+        <div class="display-edit" v-if="role === 'ROLE_ADMIN'">
           <form @submit="edit" class="edit-form">
             <div class="form-group">
               <label>Brand : </label>
@@ -115,7 +115,7 @@ export default {
         // user is not logged in
         // show some error
         swal({
-          text: "please login to add item in wishlist",
+          text: "please login to add item to wishlist",
           icon: "error",
         });
         return;
@@ -124,9 +124,9 @@ export default {
       if (this.wishListString !== "Added to Wishlist") {
         // add item to wishlist
         axios
-          .post(`api/wishlist/add?token=${this.token}`, {
+          .post('api/wishlist/add', {
             id: this.product.id,
-          })
+          }, { headers: authHeader() })
           .then((res) => {
             if (res.status === 201) {
               this.wishListString = "Added to Wishlist";
@@ -153,10 +153,10 @@ export default {
       }
       // add to cart
       axios
-        .post(`api/cart/add?token=${this.token}`, {
+        .post('api/cart/add', {
           productId: this.id,
           quantity: this.quantity,
-        })
+        }, { headers: authHeader() })
         .then((res) => {
           if (res.status == 201) {
             swal({
@@ -168,7 +168,7 @@ export default {
         .catch((err) => console.log("err", err));
     },
     edit() {
-      if (this.role === 'admin') {
+      if (this.role === 'ROLE_ADMIN') {
         const product = {
           name: this.name,
           imageURL: this.imageURL,
@@ -179,7 +179,7 @@ export default {
         };
         console.log(this.imageURL, product.imageURL);
         axios
-          .put(`api/product/update/${this.product.id}`, product)
+          .put(`api/product/update/${this.product.id}`, product, { headers: authHeader() })
           .then(() => {
               swal({
                   text: "Product Updated Sucessfully",
@@ -214,12 +214,14 @@ export default {
     );
     */
     this.token = localStorage.getItem("token");
+    /*
     if (!this.role) {
       this.getRole();
     }
-    if (this.role !== 'admin') {
+    */
+    if (this.role !== 'ROLE_ADMIN') {
       axios
-        .get(`api/wishlist/${this.token}`)
+        .get('api/wishlist/', { headers: authHeader() })
         .then((res) => {
           for (const wishlistProduct of res.data) {
               if (wishlistProduct.product.id == this.product.id) {

@@ -2,7 +2,7 @@
     <Navbar/>
 
     <!-- v-if="role === 'admin'" -->
-    <div id="admin-panel">
+    <div id="admin-panel" v-if="role === 'ROLE_ADMIN'">
         <div class="container">
             <div class="row-title">
                 <h1>All Products</h1>
@@ -18,6 +18,7 @@
 import Navbar from '../../components/Navbar.vue';
 import ProductCard from '../../components/ProductCard.vue';
 import axios from 'axios';
+import authHeader from "../../services/auth-header.js";
 
 export default {
     name: 'AdminProducts',
@@ -25,11 +26,12 @@ export default {
         ProductCard,
         Navbar,
     },
-    props: ['role'],
     data() {
         return {
             products: [],
             categories: [],
+            token: null,
+            role: this.$route.params.role
         }
     },
     methods: {
@@ -47,9 +49,21 @@ export default {
                 })
                 .catch((err) => console.log("err", err));
         },
+        async getRole() {
+            if (this.token) {
+                await axios
+                    .get('/api/user/role', { headers: authHeader() })
+                    .then((res) => {
+                        this.role = res.data.message
+                    })
+                    .catch((err) => console.log("err", err));
+            }
+        }
     },
-    async beforeMount() {
+    async mounted() {
+        this.token = localStorage.getItem("token");
         await this.fetchData();
+        await this.getRole();
     }
 }
 </script>

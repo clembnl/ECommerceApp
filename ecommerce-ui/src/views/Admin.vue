@@ -3,7 +3,7 @@
 
     <div id="user">
         <SignIn v-if="!token" @signin="signin"></SignIn>
-        <div class="container" v-if="role === 'admin'">
+        <div class="container" v-if="role === 'ROLE_ADMIN'">
             <h1>Admin Panel</h1>
             <router-link :to=" { name: 'AddProduct', params: {role: role} }" >
                 <button class="btn">Add Product</button>
@@ -49,14 +49,14 @@ export default {
         },
         signin(role) {
             this.role = role;
-            this.displaySignIn = false
+            this.token = localStorage.getItem("token");
         },
         getRole() {
             if (this.token) {
                 axios
                 .get('/api/user/role', { headers: authHeader() })
                 .then((res) => {
-                    this.role = res.data.role
+                    this.role = res.data.message
                 })
                 .catch((err) => console.log("err", err));
             }

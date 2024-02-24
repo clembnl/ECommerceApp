@@ -7,7 +7,7 @@
             <h1>Add product</h1>
         </div>
         <div class="container">
-            <div class="display-edit" v-if="role === 'admin'">
+            <div class="display-edit" v-if="role === 'ROLE_ADMIN'">
                 <form @submit="add" class="add-form">
                     <div class="form-group">
                     <label>Brand : </label>
@@ -71,7 +71,7 @@ export default {
     },
     methods: {
         add() {
-            if (this.role === 'admin') {
+            if (this.role === 'ROLE_ADMIN') {
                 const product = {
                     name: this.name,
                     imageURL: this.imageURL,

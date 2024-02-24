@@ -38,8 +38,8 @@ public class UserController {
     }
 
     @GetMapping("/role")
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseDto getRole() {
-        return new ResponseDto("success", "admin");
+        return new ResponseDto("success", "ROLE_ADMIN");
     }
 }

@@ -25,7 +25,7 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse> createCategory(@RequestBody Category category) {
         if (Helper.notNull(categoryService.readCategory(category.getCategoryName()))) {
             return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category already exists"),
@@ -37,7 +37,7 @@ public class CategoryController {
     }
 
     @PutMapping("/update/{categoryID}")
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse> updateCategory(@PathVariable("categoryID") Integer categoryID,
                                                       @RequestBody Category category) {
         // Check to see if the category exists.

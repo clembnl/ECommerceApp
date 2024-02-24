@@ -53,7 +53,7 @@ public class UserService {
         }
 
         User user = new User(signupDto.getUsername(), signupDto.getEmail(),
-                Role.user, encoder.encode(signupDto.getPassword()));
+                Role.ROLE_USER, encoder.encode(signupDto.getPassword()));
 
         try {
             // save the User
@@ -112,7 +112,7 @@ public class UserService {
     }
 
     boolean canCrudUser(Role role) {
-        if (role == Role.admin) {
+        if (role == Role.ROLE_ADMIN) {
             return true;
         }
         return false;
@@ -121,11 +121,11 @@ public class UserService {
     boolean canCrudUser(User userUpdating, Integer userIdBeingUpdated) {
         Role role = userUpdating.getRole();
         // admin and manager can crud any user
-        if (role == Role.admin) {
+        if (role == Role.ROLE_ADMIN) {
             return true;
         }
         // user can update his own record, but not his role
-        if (role == Role.user && userUpdating.getId() == userIdBeingUpdated) {
+        if (role == Role.ROLE_USER && userUpdating.getId() == userIdBeingUpdated) {
             return true;
         }
         return false;

@@ -37,7 +37,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse> addProduct(@RequestBody ProductDto productDto) {
         Optional<Category> optionalCategory = categoryService.readCategory(productDto.getCategoryId());
         if (!optionalCategory.isPresent()) {
@@ -51,7 +51,7 @@ public class ProductController {
     }
 
     @PutMapping("/update/{productID}")
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ApiResponse> updateProduct(@PathVariable("productID") Integer productID,
                                                      @RequestBody ProductDto productDto) {
         Optional<Category> optionalCategory = categoryService.readCategory(productDto.getCategoryId());

@@ -27,7 +27,7 @@ export default {
     methods: {
         fetchWishList() {
             axios
-                .get('api/wishlist', {headers: authHeader()})
+                .get('api/wishlist/', {headers: authHeader()})
                 .then((res) => {
                     this.products = res.data;
                 })

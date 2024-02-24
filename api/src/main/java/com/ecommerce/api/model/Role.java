@@ -1,6 +1,6 @@
 package com.ecommerce.api.model;
 
 public enum Role {
-    user,
-    admin
+    ROLE_USER,
+    ROLE_ADMIN
 }

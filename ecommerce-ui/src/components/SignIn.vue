@@ -39,7 +39,8 @@ export default {
             await axios
                 .post('api/user/signin', body)
                 .then((res) => {
-                    if (res.data.role === 'admin' && this.$route.name === 'Admin') {
+                    if (res.data.role === 'ROLE_ADMIN' && this.$route.name === 'Admin') {
+                        localStorage.setItem("token", res.data.token);
                         this.$emit('signin', res.data.role);
                         swal({
                             text: "Login successful",
@@ -48,6 +49,7 @@ export default {
                     }
                     else {
                         this.$router.replace("/");
+                        console.log(res.data.token);
                         localStorage.setItem("token", res.data.token);
                         swal({
                             text: "Login successful",

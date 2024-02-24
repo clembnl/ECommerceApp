@@ -31,7 +31,7 @@ public class CartController {
     private UserRepository userRepository;
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> addToCart(@RequestBody AddToCartDto addToCartDto,
                                                  Authentication authentication)
             throws AuthenticationFailException, ProductNotExistException {
@@ -45,7 +45,7 @@ public class CartController {
     }
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<CartDto> getCartItems(Authentication authentication)
             throws AuthenticationFailException {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -55,7 +55,7 @@ public class CartController {
     }
 
     @PutMapping("/update/{cartItemId}")
-    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> updateCartItem(@RequestBody AddToCartDto cartDto,
                                                       Authentication authentication)
             throws AuthenticationFailException,ProductNotExistException {
@@ -68,7 +68,7 @@ public class CartController {
     }
 
     @DeleteMapping("/delete/{cartItemId}")
-    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> deleteCartItem(@PathVariable("cartItemId") int itemID,
                                                       Authentication authentication)
             throws AuthenticationFailException, CartItemNotExistException {

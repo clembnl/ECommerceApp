@@ -28,7 +28,7 @@ public class WishListController {
     private UserRepository userRepository;
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<WishList>> getWishList(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userRepository.findByUsername(userDetails.getUsername());
@@ -37,7 +37,7 @@ public class WishListController {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> addWishList(@RequestBody Product product,
                                                    Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -49,7 +49,7 @@ public class WishListController {
     }
 
     @DeleteMapping("/delete/{wishlistItemId}")
-    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> deleteWishListItem(@PathVariable("wishlistItemId") int itemID,
                                                           Authentication authentication)
             throws AuthenticationFailException, WishListItemNotExistException {

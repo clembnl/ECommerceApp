@@ -32,7 +32,7 @@ public class OrderController {
 
     // stripe create session API
     @PostMapping("/create-checkout-session")
-    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<StripeResponse> checkoutList(@RequestBody List<CheckoutItemDto> checkoutItemDtoList)
             throws StripeException {
         // create the stripe session
@@ -44,7 +44,7 @@ public class OrderController {
 
     // place order after checkout
     @PostMapping("/add")
-    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse> placeOrder(@RequestParam("sessionId") String sessionId,
                                                   Authentication authentication)
             throws AuthenticationFailException {
@@ -74,7 +74,7 @@ public class OrderController {
 
     // get orderitems for an order
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('user') or hasRole('admin')")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> getOrderById(@PathVariable("id") Integer id)
             throws AuthenticationFailException {
         try {
