@@ -82,7 +82,7 @@ export default {
                 }
                 console.log(this.imageURL, product.imageURL);
                 axios
-                    .post('api/product/add', product, { headers: authHeader() })
+                    .post('product/add', product, { headers: authHeader() })
                     .then(() => {
                         router.push({ name: 'Admin'});
                         swal({
@@ -96,7 +96,7 @@ export default {
         getRole() {
             if (this.token) {
                 axios
-                .get('/api/user/role', { headers: authHeader() })
+                .get('user/role', { headers: authHeader() })
                 .then((res) => {
                     this.role = res.data.role
                 })

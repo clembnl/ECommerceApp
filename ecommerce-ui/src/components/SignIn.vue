@@ -36,7 +36,7 @@ export default {
                 password: this.password,
             };
             await axios
-                .post('api/user/signin', body)
+                .post('user/signin', body)
                 .then((res) => {
                     if (res.data.role === 'ROLE_ADMIN' && this.$route.name === 'Admin') {
                         localStorage.setItem("token", res.data.token);

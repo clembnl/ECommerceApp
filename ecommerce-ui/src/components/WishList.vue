@@ -27,7 +27,7 @@ export default {
     methods: {
         fetchWishList() {
             axios
-                .get('api/wishlist/', {headers: authHeader()})
+                .get('wishlist/', {headers: authHeader()})
                 .then((res) => {
                     this.products = res.data;
                 })
@@ -38,7 +38,7 @@ export default {
         },
         removeFromWishlist(itemId) {
             axios
-                .delete(`api/wishlist/delete/${itemId}`, {headers: authHeader()})
+                .delete(`wishlist/delete/${itemId}`, {headers: authHeader()})
                 .then(async (response) => {
                     if (response.status === 200) {
                         this.fetchWishList();

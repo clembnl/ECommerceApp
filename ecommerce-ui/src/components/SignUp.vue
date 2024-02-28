@@ -65,10 +65,10 @@ export default {
                     password: this.password,
                     };
                     await axios
-                        .post('api/user/signup', user)
+                        .post('user/signup', user)
                         .then(async () => {
                             await axios
-                                    .post('api/user/signin', {username: this.username, password: this.password})
+                                    .post('user/signin', {username: this.username, password: this.password})
                                     .then((res) => {
                                         this.$router.replace("/");
                                         localStorage.setItem("token", JSON.stringify(res.data.token));

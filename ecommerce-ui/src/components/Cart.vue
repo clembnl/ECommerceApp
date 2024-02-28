@@ -57,7 +57,7 @@ export default {
         //fetch all items in cart
         async listCartItems() {
             await axios
-                .get('api/cart/', { headers: authHeader() })
+                .get('cart/', { headers: authHeader() })
                 .then((res) => {
                     const result = res.data;
                     this.cartItems = result.cartItems;
@@ -70,7 +70,7 @@ export default {
         },
         async deleteItem(itemId) {
             await axios
-                .delete(`api/cart/delete/${itemId}`, { headers: authHeader() })
+                .delete(`cart/delete/${itemId}`, { headers: authHeader() })
                 .then(async (response) => {
                     if (response.status === 200) {
                         await this.listCartItems();

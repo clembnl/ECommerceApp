@@ -37,13 +37,13 @@ export default {
     methods: {
         async fetchData() {
             await axios
-                .get('api/product/')
+                .get('product/')
                 .then(response => {
                     this.products = response.data;
                 })
                 .catch((err) => console.log("err", err));
             await axios
-                .get('api/category/')
+                .get('category/')
                 .then(response => {
                     this.categories = response.data;
                 })
@@ -52,7 +52,7 @@ export default {
         async getRole() {
             if (this.token) {
                 await axios
-                    .get('/api/user/role', { headers: authHeader() })
+                    .get('user/role', { headers: authHeader() })
                     .then((res) => {
                         this.role = res.data.message
                     })

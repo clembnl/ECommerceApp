@@ -54,7 +54,7 @@ export default {
         getRole() {
             if (this.token) {
                 axios
-                .get('/api/user/role', { headers: authHeader() })
+                .get('user/role', { headers: authHeader() })
                 .then((res) => {
                     this.role = res.data.message
                 })

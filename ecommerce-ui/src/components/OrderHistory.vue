@@ -41,7 +41,7 @@ export default {
     methods: {
         // list of order histories
         async listOrders(){
-            await axios.get('api/order/', { headers: authHeader() })
+            await axios.get('order/', { headers: authHeader() })
                 .then((response) => {
                     if(response.status === 200){
                         // for each order populate orderList

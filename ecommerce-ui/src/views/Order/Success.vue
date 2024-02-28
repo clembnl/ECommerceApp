@@ -18,7 +18,7 @@
     methods:{
         async saveOrder() {
             await axios
-                .post(`api/order/add/?sessionId=${this.sessionId}`, null, { headers: authHeader() })
+                .post(`order/add/?sessionId=${this.sessionId}`, null, { headers: authHeader() })
                     .then(()=>{
                     this.$router.push({ name: 'Account'})
                     })

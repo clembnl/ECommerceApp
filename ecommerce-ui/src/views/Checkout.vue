@@ -50,7 +50,7 @@ export default {
         // get all cart Items for the user
         async getAllCartItems() {
             await axios
-                .get('api/cart/', { headers: authHeader() })
+                .get('cart/', { headers: authHeader() })
                 .then((response) => {
                     if (response.status === 200) {
                         let cartItems = response.data.cartItems
@@ -71,7 +71,7 @@ export default {
         },
         async goToCheckout() {
             await axios
-                .post(`api/order/create-checkout-session`,
+                .post(`order/create-checkout-session`,
                         this.checkoutBodyArray, { headers: authHeader() })
                 .then((response) => {
                     localStorage.setItem("sessionId", response.data.sessionId);

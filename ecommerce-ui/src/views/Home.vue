@@ -89,13 +89,13 @@ export default {
         },
         async fetchData() {
             await axios
-                .get('api/product/')
+                .get('product/')
                 .then(response => {
                     this.products = response.data;
                 })
                 .catch((err) => console.log("err", err));
             await axios
-                .get('api/category/')
+                .get('category/')
                 .then(response => {
                     this.categories = response.data;
                 })

@@ -64,6 +64,8 @@ public class WebSecurityConfig {
                                 .antMatchers(HttpMethod.GET, "/category/").permitAll()
                                 .antMatchers(HttpMethod.GET, "/product/").permitAll()
                                 .antMatchers(HttpMethod.GET, "/product/**").permitAll()
+                                .antMatchers("/index.html", "/", "/js/**", "/css/**", "/img/**", "/*.ico")
+                                    .permitAll()
                                 .anyRequest().authenticated()
                 );
 

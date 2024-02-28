@@ -124,7 +124,7 @@ export default {
       if (this.wishListString !== "Added to Wishlist") {
         // add item to wishlist
         axios
-          .post('api/wishlist/add', {
+          .post('wishlist/add', {
             id: this.product.id,
           }, { headers: authHeader() })
           .then((res) => {
@@ -153,7 +153,7 @@ export default {
       }
       // add to cart
       axios
-        .post('api/cart/add', {
+        .post('cart/add', {
           productId: this.id,
           quantity: this.quantity,
         }, { headers: authHeader() })
@@ -179,7 +179,7 @@ export default {
         };
         console.log(this.imageURL, product.imageURL);
         axios
-          .put(`api/product/update/${this.product.id}`, product, { headers: authHeader() })
+          .put(`product/update/${this.product.id}`, product, { headers: authHeader() })
           .then(() => {
               swal({
                   text: "Product Updated Sucessfully",
@@ -192,7 +192,7 @@ export default {
     getRole() {
       if (this.token) {
           axios
-          .get('/api/user/role', { headers: authHeader() })
+          .get('user/role', { headers: authHeader() })
           .then((res) => {
               this.role = res.data.role
           })
@@ -204,7 +204,7 @@ export default {
     this.id = this.$route.params.id;
 
     axios
-      .get(`api/product/${this.id}`, {productID: this.id})
+      .get(`product/${this.id}`, {productID: this.id})
       .then((res) => {
         this.product = res.data;
       })
@@ -214,7 +214,7 @@ export default {
 
     if (this.role !== 'ROLE_ADMIN' && this.token) {
       axios
-        .get('api/wishlist/', { headers: authHeader() })
+        .get('wishlist/', { headers: authHeader() })
         .then((res) => {
           for (const wishlistProduct of res.data) {
               if (wishlistProduct.product.id == this.product.id) {
