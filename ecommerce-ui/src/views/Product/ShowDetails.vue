@@ -202,24 +202,17 @@ export default {
   },
   mounted() {
     this.id = this.$route.params.id;
+
     axios
       .get(`api/product/${this.id}`, {productID: this.id})
       .then((res) => {
         this.product = res.data;
       })
       .catch((err) => console.log("err", err));
-    /*
-    this.category = this.categories.find(
-      (category) => category.id == this.product.categoryId
-    );
-    */
+
     this.token = localStorage.getItem("token");
-    /*
-    if (!this.role) {
-      this.getRole();
-    }
-    */
-    if (this.role !== 'ROLE_ADMIN') {
+
+    if (this.role !== 'ROLE_ADMIN' && this.token) {
       axios
         .get('api/wishlist/', { headers: authHeader() })
         .then((res) => {

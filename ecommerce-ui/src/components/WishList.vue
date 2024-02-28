@@ -33,6 +33,7 @@ export default {
                 })
                 .catch((err) => {
                     console.log("err", err);
+                    localStorage.removeItem("token");
                 });
         },
         removeFromWishlist(itemId) {

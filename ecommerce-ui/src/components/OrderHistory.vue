@@ -60,7 +60,8 @@ export default {
                     }
                 })
                 .catch((error)=>{
-                    console.log(error)
+                    console.log(error);
+                    localStorage.removeItem("token");
                 });
         },
         toggle(showNew, showMen, showWomen, showFiltered) {
