@@ -83,7 +83,7 @@ export default {
                 } else {
                     // show some error
                     swal({
-                        text: "passwords don't match",
+                        text: "Passwords don't match",
                         icon: "error",
                     });
                 }

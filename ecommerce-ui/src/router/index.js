@@ -1,13 +1,12 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import Admin from '../views/Admin.vue';
-import Cart from '../views/Cart.vue';
+import Account from '../views/Account.vue';
 import Checkout from '../views/Checkout.vue';
 import ShowDetails from "../views/Product/ShowDetails";
 import User from '../views/User';
 import Success from '../views/Order/Success.vue';
 import Failed from '../views/Order/Failed.vue';
-import OrderHistory from '../views/Order/OrderHistory.vue';
 import Products from '../views/Product/Products.vue';
 import AddProduct from '../views/Product/AddProduct.vue';
 
@@ -40,9 +39,9 @@ const routes = [
   },
   //cart page
   {
-    path: "/cart",
-    name: "Cart",
-    component: Cart
+    path: "/account",
+    name: "Account",
+    component: Account
   },
   //checkout page
   {
@@ -74,12 +73,6 @@ const routes = [
     path: "/payment/failed",
     name: "Failed",
     component: Failed
-  },
-  //Order history page
-  {
-    path: '/orders',
-    name: 'OrderHistory',
-    component: OrderHistory
   }
 ]
 

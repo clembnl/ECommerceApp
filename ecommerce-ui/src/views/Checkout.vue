@@ -50,7 +50,7 @@ export default {
         // get all cart Items for the user
         async getAllCartItems() {
             await axios
-                .get('api/cart', { headers: authHeader() })
+                .get('api/cart/', { headers: authHeader() })
                 .then((response) => {
                     if (response.status === 200) {
                         let cartItems = response.data.cartItems

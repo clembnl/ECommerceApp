@@ -58,18 +58,18 @@ public class OrderController {
     }
 
     // get all orders
-    /*
     @GetMapping("/")
-    public ResponseEntity<List<Order>> getAllOrders()
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<List<Order>> getAllOrders(Authentication authentication)
             throws AuthenticationFailException {
         // retrieve user
-        User user = ?;
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = userRepository.findByUsername(userDetails.getUsername());
         // get orders
         List<Order> orderDtoList = orderService.listOrders(user);
 
         return new ResponseEntity<>(orderDtoList, HttpStatus.OK);
     }
-    */
 
 
     // get orderitems for an order

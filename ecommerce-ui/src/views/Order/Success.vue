@@ -18,12 +18,9 @@
     methods:{
         async saveOrder() {
             await axios
-                .post("api/order/add/sessionId="+this.sessionId, { headers: authHeader() })
+                .post(`api/order/add/?sessionId=${this.sessionId}`, null, { headers: authHeader() })
                     .then(()=>{
-                    //window.location.href = '/order'
-                    //document.getElementById("message").innerHTML = "order placed";
-                    this.$router.push({ name: 'OrderHistory'})
-                    //router.push()
+                    this.$router.push({ name: 'Account'})
                     })
                     .catch((error)=>{
                         console.log(error);

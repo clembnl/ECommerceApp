@@ -15,11 +15,11 @@
         </div>
 
         <div id="navbar-icon">
-            <router-link class="navbar-account" :to="{ name: 'User' }">
-                <img id="account" src="../assets/account_logo.svg" />
+            <router-link class="navbar-user" :to="{ name: 'User' }">
+                <img id="user" src="../assets/account_logo.svg" />
             </router-link>
 
-            <router-link class="navbar-cart" :to="{ name: 'Cart' }">
+            <router-link class="navbar-account" :to="{ name: 'Account' }">
                 <img id="cart" src="../assets/shopping_bag_logo.svg" />
             </router-link>
         </div>

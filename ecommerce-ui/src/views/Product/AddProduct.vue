@@ -82,11 +82,11 @@ export default {
                 }
                 console.log(this.imageURL, product.imageURL);
                 axios
-                    .post('api/product/add', product)
+                    .post('api/product/add', product, { headers: authHeader() })
                     .then(() => {
-                        router.push({ name: 'AdminProducts'});
+                        router.push({ name: 'Admin'});
                         swal({
-                            text: "User signup successful",
+                            text: "New Product Added",
                             icon: "success",
                         });
                     })

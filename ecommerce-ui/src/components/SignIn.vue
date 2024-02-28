@@ -57,7 +57,14 @@ export default {
                     }
 
                 })
-                .catch((err) => console.log("err", err));
+                .catch((err) => {
+                    console.log("err", err);
+                    // show some error
+                    swal({
+                        text: "Invalid Credentials",
+                        icon: "error",
+                    });
+                });
         },
         toggleSignUp() {
             this.$emit('toggleSignUp');
