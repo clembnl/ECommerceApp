@@ -45,9 +45,9 @@
             <div class="form-group">
               <label>Category : </label>
               <select v-model="categoryId" type="number" class="form-control">
-                <option value=13>New Collection</option>
-                <option value=14>Men</option>
-                <option value=15>Women</option>
+                <option value=10>New Collection</option>
+                <option value=11>Men</option>
+                <option value=12>Women</option>
                 <option value=0>Other</option>
               </select>
             </div>
