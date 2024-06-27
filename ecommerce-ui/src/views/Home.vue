@@ -178,7 +178,7 @@ export default {
 #home .row {
     display: flex;
     flex-wrap: wrap;
-    /*justify-content: space-between;*/
+    justify-content: center;
 }
 
 #home h1 {
@@ -195,5 +195,80 @@ export default {
 
 .transparent {
     opacity: 0.5;
+}
+
+@media (max-width: 1420px) {
+    #home .container {
+        width: 90%;
+    }
+}
+
+@media (max-width: 1265px) {
+    #home .container {
+        width: 93%;
+    }
+
+    #home .row {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 1225px) {
+    #home .row {
+        justify-content: center;
+    }
+
+    .card {
+        width: 300px !important;
+    }
+
+    .card .card-img img {
+        width: 300px !important;
+        height: 300px !important;
+    }
+}
+
+@media (max-width: 1064px) {
+    .card {
+        width: 280px !important;
+    }
+
+    .card .card-img img {
+        width: 280px !important;
+        height: 280px !important;
+    }
+}
+
+@media (max-width: 1000px) {
+    .card {
+        width: 260px !important;
+    }
+
+    .card .card-img img {
+        width: 260px !important;
+        height: 260px !important;
+    }
+}
+
+@media (max-width: 935px) {
+    .card {
+        width: 240px !important;
+    }
+
+    .card .card-img img {
+        width: 240px !important;
+        height: 240px !important;
+    }
+}
+
+@media (max-width: 870px) {
+    .card {
+        width: 210px !important;
+    }
+
+    .card .card-img img {
+        width: 210px !important;
+        height: 210px !important;
+    }
 }
 </style>
