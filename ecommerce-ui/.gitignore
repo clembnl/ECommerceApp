@@ -3,6 +3,7 @@ node_modules
 
 # Build
 dist
+dist_old
 
 
 # local env files
