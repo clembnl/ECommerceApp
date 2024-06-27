@@ -54,4 +54,18 @@ export default {
 #order {
     width: 33%;
 }
+
+@media (max-width: 620px) {
+    #account {
+        flex-direction: column !important;
+    }
+
+    #cart {
+        width: 80%;
+    }
+
+    #order {
+        width: 80%;
+    }
+}
 </style>

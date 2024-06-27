@@ -102,4 +102,64 @@ export default {
         border-radius: 25px;
         width: 100%;
     }
+
+@media (max-width: 1050px) {
+    #user {
+        width: 40% !important;
+    }
+}
+
+@media (max-width: 990px) {
+    #user {
+        width: 45% !important;
+    }
+}
+
+@media (max-width: 890px) {
+    #user {
+        width: 50% !important;
+    }
+}
+
+@media (max-width: 800px) {
+    #user {
+        width: 55% !important;
+    }
+}
+
+@media (max-width: 730px) {
+    #user {
+        width: 60% !important;
+    }
+}
+
+@media (max-width: 540px) {
+    #user {
+        width: 65% !important;
+    }
+}
+
+@media (max-width: 500px) {
+    #user {
+        width: 70% !important;
+    }
+}
+
+@media (max-width: 470px) {
+    #user {
+        width: 75% !important;
+    }
+}
+
+@media (max-width: 430px) {
+    #user {
+        width: 80% !important;
+    }
+}
+
+@media (max-width: 400px) {
+    #user {
+        width: 85% !important;
+    }
+}
 </style>

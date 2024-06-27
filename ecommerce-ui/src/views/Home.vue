@@ -2,7 +2,7 @@
     <Navbar @toggle="toggle" />
 
     <div id="home">
-        <div class="container" v-if="showNew && !showFiltered">
+        <div class="container container-filtered" v-if="showNew && !showFiltered">
             <div class="row-title">
                 <h1 class="title">New Arrivals</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
@@ -13,7 +13,7 @@
             </div>
         </div>
 
-        <div class="container" v-if="showMen && !showFiltered">
+        <div class="container container-filtered" v-if="showMen && !showFiltered">
             <div class="row-title">
                 <h1 class="title">Men</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="container" v-if="showWomen && !showFiltered">
+        <div class="container container-filtered" v-if="showWomen && !showFiltered">
             <div class="row-title">
                 <h1 class="title">Women</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
@@ -35,7 +35,7 @@
             </div>
         </div>
 
-        <div class="container" v-if="showFiltered">
+        <div class="container container-filtered" v-if="showFiltered">
             <div class="row-title">
                 <h1 class="title">Search</h1>
                 <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
@@ -43,6 +43,17 @@
             <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
             <div class="row">
                 <ProductCard v-for="item in this.filtered" :product="item" :key="item.id" />
+            </div>
+        </div>
+
+        <div class="container" id="container-all">
+            <div class="row-title">
+                <h1 class="title">Products</h1>
+                <button class="btn transparent" v-if="!showFilters" @click="filterClick()">Filters</button>
+            </div>
+            <Filters v-if="showFilters" @closeFilters="filterClick" @applyFilter="applyFilter" />
+            <div class="row">
+                <ProductCard v-for="item in this.products" :product="item" :key="item.id" />
             </div>
         </div>
     </div>
@@ -164,6 +175,10 @@ export default {
     margin: auto;
 }
 
+#container-all {
+    visibility: hidden;
+}
+
 #home .row-title {
     display: flex;
     justify-content: space-between;
@@ -195,80 +210,5 @@ export default {
 
 .transparent {
     opacity: 0.5;
-}
-
-@media (max-width: 1420px) {
-    #home .container {
-        width: 90%;
-    }
-}
-
-@media (max-width: 1265px) {
-    #home .container {
-        width: 93%;
-    }
-
-    #home .row {
-        justify-content: space-between;
-    }
-}
-
-@media (max-width: 1225px) {
-    #home .row {
-        justify-content: center;
-    }
-
-    .card {
-        width: 300px !important;
-    }
-
-    .card .card-img img {
-        width: 300px !important;
-        height: 300px !important;
-    }
-}
-
-@media (max-width: 1064px) {
-    .card {
-        width: 280px !important;
-    }
-
-    .card .card-img img {
-        width: 280px !important;
-        height: 280px !important;
-    }
-}
-
-@media (max-width: 1000px) {
-    .card {
-        width: 260px !important;
-    }
-
-    .card .card-img img {
-        width: 260px !important;
-        height: 260px !important;
-    }
-}
-
-@media (max-width: 935px) {
-    .card {
-        width: 240px !important;
-    }
-
-    .card .card-img img {
-        width: 240px !important;
-        height: 240px !important;
-    }
-}
-
-@media (max-width: 870px) {
-    .card {
-        width: 210px !important;
-    }
-
-    .card .card-img img {
-        width: 210px !important;
-        height: 210px !important;
-    }
 }
 </style>

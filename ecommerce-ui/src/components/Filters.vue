@@ -41,8 +41,8 @@
                     <option value="brand">Brand</option>
                 </select>
             </li>
-            <li><button class="btn-filter hover-animation" @click="applyFilter()">Apply</button></li>
-            <li><button @click="closeFilters()" class="btn-filter">Close filter</button></li>
+            <li><button class="btn-filter hover-animation apply" @click="applyFilter()">Apply</button></li>
+            <li><button @click="closeFilters()" class="btn-filter">X Close filter</button></li>
         </ul>
     </div>
 </template>
@@ -317,5 +317,9 @@ input[type="range"] {
 .hover-animation:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+.apply {
+    color: burlywood;
 }
 </style>
