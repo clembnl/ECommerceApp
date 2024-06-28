@@ -1,0 +1,9 @@
+1. Work on frontend
+2. Build frontend : npm run build 
+3. Copy /dist from /ecommerce-ui to /api/src/main/resources/static
+4. Build backend : mvn clean install -DskipTests
+5. Copy .jar from /target to /docker
+6. Build Docker image in /docker : docker compose build
+7. Run Docker compose : docker compose up
+8. Finish run local : control+C
+9. Kill Docker containers : docker compose down
