@@ -212,6 +212,15 @@ export default {
     opacity: 0.5;
 }
 
+.row .card {
+    width: 350px !important;
+}
+
+.row .card .card-img img {
+    width: 350px !important;
+    height: 350px !important;
+}
+
 @media (max-width: 1420px) {
     #home .container {
         width: 90%;
@@ -233,22 +242,22 @@ export default {
         justify-content: center;
     }
 
-    .card {
+    .row .card {
         width: 300px !important;
     }
 
-    .card .card-img img {
+    .row .card .card-img img {
         width: 300px !important;
         height: 300px !important;
     }
 }
 
 @media (max-width: 1064px) {
-    .card {
+    .row .card {
         width: 280px !important;
     }
 
-    .card .card-img img {
+    .row .card .card-img img {
         width: 280px !important;
         height: 280px !important;
     }
@@ -259,11 +268,11 @@ export default {
         margin: 10px 100px 30px 100px !important;
     }
 
-    .card {
+    .row .card {
         width: 260px !important;
     }
 
-    .card .card-img img {
+    .row .card .card-img img {
         width: 260px !important;
         height: 260px !important;
     }
@@ -274,11 +283,11 @@ export default {
         margin: 10px 80px 30px 80px !important;
     }
 
-    .card {
+    .row .card {
         width: 240px !important;
     }
 
-    .card .card-img img {
+    .row .card .card-img img {
         width: 240px !important;
         height: 240px !important;
     }
@@ -289,11 +298,11 @@ export default {
         margin: 10px 25px 30px 25px !important;
     }
 
-    .card {
+    .row .card {
         width: 210px !important;
     }
 
-    .card .card-img img {
+    .row .card .card-img img {
         width: 210px !important;
         height: 210px !important;
     }
@@ -316,7 +325,7 @@ export default {
     }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 725px) {
     #navbar-menu {
         display: none !important;
     }
@@ -331,11 +340,11 @@ export default {
 }
 
 @media (max-width: 512px) {
-    .card {
+    .row .card {
         width: 300px !important;
     }
 
-    .card .card-img img {
+    .row .card .card-img img {
         width: 300px !important;
         height: 300px !important;
     }

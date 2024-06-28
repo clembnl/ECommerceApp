@@ -171,13 +171,26 @@ export default {
     border: 2px solid burlywood;
     border-radius: 20px;
     padding: 15px;
+    margin: auto;
+    width: 80%;
 }
 
 .cart-item-img {
-    box-shadow: 15px 15px 25px darkgray;
+    box-shadow: 10px 10px 15px darkgray;
     padding: 10px;
     border-radius: 20px;
-    width: 350px;
     margin: auto;
+    max-width: 350px;
+}
+
+.cart-item-img img{
+    width: 100%;
+    height: 100%;
+    max-width: 350px;
+}
+
+.cart-item-product {
+    margin: auto;
+    width: 100%;
 }
 </style>

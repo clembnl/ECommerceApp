@@ -229,9 +229,10 @@ export default {
 
 <style scoped>
 .container {
-  width: 1200px;
+  width: 80%;
   margin: auto;
 }
+
 .row {
   margin-top: 20px;
   display: flex;
@@ -239,17 +240,22 @@ export default {
   align-items: flex-start;
 }
 
+.image {
+  width: 45%;
+  margin-right: 80px;
+}
+
+.image img {
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+}
+
 .display-info {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 500px;
-}
-
-img {
-  width: 500px;
-  height: 500px;
-  margin-right: 80px;
+  width: 55%;
 }
 
 h2 {
@@ -333,5 +339,60 @@ p {
     padding: 5px;
     width: 100%;
     margin-top: 5px;
+}
+
+@media (max-width: 1280px) {
+  p {
+    font-size: 1.1em;
+  }
+}
+
+@media (max-width: 1024px) {
+  .image {
+    margin-right: 60px;
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+
+  p {
+    font-size: 1em;
+  }
+
+  .input-group-text {
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 910px) {
+  .image {
+    margin-right: 50px;
+  }
+
+  p {
+    font-size: 0.9em;
+  }
+
+  .input-group-text {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 680px) {
+  .row {
+    flex-direction: column;
+  }
+
+  .image {
+    margin: auto;
+    margin-bottom: 30px;
+    width: 60%;
+  }
+
+  .display-info {
+    margin: auto;
+    width: 80%;
+  }
 }
 </style>

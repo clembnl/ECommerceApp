@@ -124,19 +124,25 @@ export default {
     border: 2px solid burlywood;
     border-radius: 20px;
     padding: 15px;
+    margin: auto;
+    width: 80%;
 }
 
 .order-item-product {
-    margin: 10px;
-    width: 350px;
+    margin: auto;
+    width: 100%;
 }
 
 .card-img {
-    box-shadow: 15px 15px 25px darkgray;
+    box-shadow: 10px 10px 15px darkgray;
     padding: 10px;
     border-radius: 20px;
-    width: 350px;
     margin: auto;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
 }
 
 #item-price {

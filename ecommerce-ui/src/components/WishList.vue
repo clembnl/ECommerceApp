@@ -66,7 +66,7 @@ export default {
     }
 
     .wishlist-products {
-        width: 400px;
+        width: 100%;
         margin: auto;
     }
 

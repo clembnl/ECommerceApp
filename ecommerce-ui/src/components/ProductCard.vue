@@ -41,8 +41,13 @@ export default {
 <style scoped>
 
 .card {
-    margin: 10px;
-    width: 350px;
+    margin: auto;
+    width: 80%;
+}
+
+.card .card-img img {
+    width: 100%;
+    height: 100%;
 }
 
 .card-body a {

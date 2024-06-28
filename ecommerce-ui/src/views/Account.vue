@@ -53,6 +53,7 @@ export default {
 
 #order {
     width: 33%;
+    height: min-content;
 }
 
 @media (max-width: 620px) {
@@ -62,6 +63,7 @@ export default {
 
     #cart {
         width: 80%;
+        margin-bottom: 30px;
     }
 
     #order {
