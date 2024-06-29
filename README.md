@@ -1,7 +1,5 @@
 # E-COMMERCE APP
 
-## RUN APP
-
 1. Build app
 
 ```bash
